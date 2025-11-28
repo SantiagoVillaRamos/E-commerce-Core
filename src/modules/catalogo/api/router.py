@@ -2,14 +2,13 @@
 Router de FastAPI para el módulo de Catálogo.
 Define los endpoints HTTP para gestionar productos.
 """
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, status
 from typing import List, Annotated
 
 from src.modules.catalogo.application.facade import CatalogoFacade
 from src.modules.catalogo.application.features.create_product.command import CreateProductCommand
 from src.modules.catalogo.application.features.create_product.response import CreateProductResponse
 from src.modules.catalogo.api.dependencies import get_catalogo_facade
-from src.core.exceptions import DomainError, BusinessRuleViolation, ValidationError
 
 
 # Router del módulo
@@ -28,8 +27,9 @@ async def create_product(
     facade: Annotated[CatalogoFacade, Depends(get_catalogo_facade)]
 ) -> CreateProductResponse:
     """
-    Endpoint para crear un nuevo producto.
-    Usa la Facade del módulo Catálogo.
+    Crea un nuevo producto en el catálogo.
+    
+    Las excepciones son manejadas automáticamente por los exception handlers globales.
     
     Args:
         command: Datos del producto a crear
@@ -37,43 +37,8 @@ async def create_product(
         
     Returns:
         Datos del producto creado
-        
-    Raises:
-        HTTPException 400: Si hay errores de validación o reglas de negocio
-        HTTPException 500: Si hay errores internos
     """
-    try:
-        # Ejecutar a través de la facade
-        result = await facade.create_product(command)
-        return result
-        
-    except ValidationError as e:
-        # Errores de validación de dominio (ej: SKU inválido, precio negativo)
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail={"error": "Validation Error", "message": e.message}
-        )
-        
-    except BusinessRuleViolation as e:
-        # Violaciones de reglas de negocio (ej: SKU duplicado)
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail={"error": "Business Rule Violation", "message": e.message}
-        )
-        
-    except DomainError as e:
-        # Otros errores de dominio
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail={"error": "Domain Error", "message": e.message}
-        )
-        
-    except Exception as e:
-        # Errores inesperados
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail={"error": "Internal Server Error", "message": str(e)}
-        )
+    return await facade.create_product(command)
 
 
 @router.get(

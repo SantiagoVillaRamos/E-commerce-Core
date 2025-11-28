@@ -4,6 +4,7 @@ Monta los routers de todos los módulos.
 """
 from fastapi import FastAPI
 from src.core.config import settings
+from src.core.exception_handlers import register_exception_handlers
 from src.modules.catalogo.api.router import router as catalogo_router
 from src.modules.pedidos.api.router import router as pedidos_router
 
@@ -14,8 +15,12 @@ def create_app() -> FastAPI:
     app = FastAPI(
         title=settings.app_name,
         debug=settings.debug,
-        version="1.0.0"
+        version="1.0.0",
+        description="API con manejo centralizado de excepciones"
     )
+    
+    # Registrar exception handlers globales
+    register_exception_handlers(app)
     
     # Montar router del módulo Catálogo
     app.include_router(
