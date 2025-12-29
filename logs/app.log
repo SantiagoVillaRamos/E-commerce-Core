@@ -490,3 +490,267 @@ WHERE $1::UUID = order_items.order_id
 2025-12-29 21:06:16 | INFO     | src.modules.pedidos.application.features.place_order.use_case:execute:64 - Iniciando proceso de creación de orden para cliente CUST-MULTI
 2025-12-29 21:06:16 | INFO     | src.modules.pedidos.application.features.place_order.use_case:execute:107 - Stock reservado exitosamente
 2025-12-29 21:06:16 | INFO     | src.modules.pedidos.application.features.place_order.use_case:execute:124 - Orden e18ad49a-5097-4e03-b3b6-f20dadc38cc2 creada exitosamente con estado confirmed
+2025-12-29 21:48:36 | INFO     | src.modules.catalogo.application.features.create_product.use_case:execute:46 - Creando nuevo producto con SKU: CURL-TEST-001
+2025-12-29 21:48:36 | INFO     | logging:callHandlers:1706 - select pg_catalog.version()
+2025-12-29 21:48:36 | INFO     | logging:callHandlers:1706 - [raw sql] ()
+2025-12-29 21:48:36 | INFO     | logging:callHandlers:1706 - select current_schema()
+2025-12-29 21:48:36 | INFO     | logging:callHandlers:1706 - [raw sql] ()
+2025-12-29 21:48:36 | INFO     | logging:callHandlers:1706 - show standard_conforming_strings
+2025-12-29 21:48:36 | INFO     | logging:callHandlers:1706 - [raw sql] ()
+2025-12-29 21:48:36 | INFO     | logging:callHandlers:1706 - BEGIN (implicit)
+2025-12-29 21:48:37 | INFO     | logging:callHandlers:1706 - SELECT products.product_id 
+FROM products 
+WHERE products.sku = $1::VARCHAR
+2025-12-29 21:48:37 | INFO     | logging:callHandlers:1706 - [generated in 0.00193s] ('CURL-TEST-001',)
+2025-12-29 21:48:37 | INFO     | logging:callHandlers:1706 - INSERT INTO products (product_id, sku, name, description, price_amount, price_currency, stock_quantity, is_active, version, created_at, updated_at) VALUES ($1::UUID, $2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::FLOAT, $6::VARCHAR, $7::INTEGER, $8::BOOLEAN, $9::INTEGER, $10::TIMESTAMP WITHOUT TIME ZONE, $11::TIMESTAMP WITHOUT TIME ZONE)
+2025-12-29 21:48:37 | INFO     | logging:callHandlers:1706 - [generated in 0.00119s] (UUID('cebadd6f-31c8-4d7c-b94d-550e83818ee6'), 'CURL-TEST-001', 'Curl Test Product', '', 99.99, 'USD', 10, True, 1, datetime.datetime(2025, 12, 29, 21, 48, 36, 886599), datetime.datetime(2025, 12, 29, 21, 48, 36, 886604))
+2025-12-29 21:48:37 | INFO     | logging:callHandlers:1706 - SELECT products.product_id, products.sku, products.name, products.description, products.price_amount, products.price_currency, products.stock_quantity, products.is_active, products.version, products.created_at, products.updated_at 
+FROM products 
+WHERE products.product_id = $1::UUID
+2025-12-29 21:48:37 | INFO     | logging:callHandlers:1706 - [generated in 0.00167s] (UUID('cebadd6f-31c8-4d7c-b94d-550e83818ee6'),)
+2025-12-29 21:48:37 | INFO     | logging:callHandlers:1706 - COMMIT
+2025-12-29 21:48:46 | INFO     | logging:callHandlers:1706 - BEGIN (implicit)
+2025-12-29 21:48:46 | INFO     | logging:callHandlers:1706 - SELECT products.product_id, products.sku, products.name, products.description, products.price_amount, products.price_currency, products.stock_quantity, products.is_active, products.version, products.created_at, products.updated_at 
+FROM products 
+ LIMIT $1::INTEGER OFFSET $2::INTEGER
+2025-12-29 21:48:46 | INFO     | logging:callHandlers:1706 - [generated in 0.00096s] (100, 0)
+2025-12-29 21:48:46 | INFO     | logging:callHandlers:1706 - COMMIT
+2025-12-29 21:50:28 | INFO     | src.modules.pedidos.application.features.place_order.use_case:execute:64 - Iniciando proceso de creación de orden para cliente CUST-CURL
+2025-12-29 21:50:28 | INFO     | logging:callHandlers:1706 - BEGIN (implicit)
+2025-12-29 21:50:28 | INFO     | logging:callHandlers:1706 - SELECT products.product_id, products.sku, products.name, products.description, products.price_amount, products.price_currency, products.stock_quantity, products.is_active, products.version, products.created_at, products.updated_at 
+FROM products 
+WHERE products.product_id = $1::UUID
+2025-12-29 21:50:28 | INFO     | logging:callHandlers:1706 - [generated in 0.00111s] (UUID('cebadd6f-31c8-4d7c-b94d-550e83818ee6'),)
+2025-12-29 21:50:28 | INFO     | logging:callHandlers:1706 - SELECT products.product_id, products.sku, products.name, products.description, products.price_amount, products.price_currency, products.stock_quantity, products.is_active, products.version, products.created_at, products.updated_at 
+FROM products 
+WHERE products.product_id = $1::UUID
+2025-12-29 21:50:28 | INFO     | logging:callHandlers:1706 - [cached since 0.006961s ago] (UUID('cebadd6f-31c8-4d7c-b94d-550e83818ee6'),)
+2025-12-29 21:50:28 | INFO     | logging:callHandlers:1706 - SELECT products.product_id, products.sku, products.name, products.description, products.price_amount, products.price_currency, products.stock_quantity, products.is_active, products.version, products.created_at, products.updated_at 
+FROM products 
+WHERE products.product_id = $1::UUID
+2025-12-29 21:50:28 | INFO     | logging:callHandlers:1706 - [cached since 0.01152s ago] (UUID('cebadd6f-31c8-4d7c-b94d-550e83818ee6'),)
+2025-12-29 21:50:28 | INFO     | logging:callHandlers:1706 - SELECT products.product_id, products.sku, products.name, products.description, products.price_amount, products.price_currency, products.stock_quantity, products.is_active, products.version, products.created_at, products.updated_at 
+FROM products 
+WHERE products.product_id = $1::UUID
+2025-12-29 21:50:28 | INFO     | logging:callHandlers:1706 - [cached since 0.01566s ago] (UUID('cebadd6f-31c8-4d7c-b94d-550e83818ee6'),)
+2025-12-29 21:50:28 | INFO     | logging:callHandlers:1706 - UPDATE products SET stock_quantity=$1::INTEGER, version=$2::INTEGER, updated_at=$3::TIMESTAMP WITHOUT TIME ZONE WHERE products.product_id = $4::UUID
+2025-12-29 21:50:28 | INFO     | logging:callHandlers:1706 - [generated in 0.00100s] (8, 2, datetime.datetime(2025, 12, 29, 21, 50, 28, 808886), UUID('cebadd6f-31c8-4d7c-b94d-550e83818ee6'))
+2025-12-29 21:50:28 | INFO     | logging:callHandlers:1706 - SELECT products.product_id, products.sku, products.name, products.description, products.price_amount, products.price_currency, products.stock_quantity, products.is_active, products.version, products.created_at, products.updated_at 
+FROM products 
+WHERE products.product_id = $1::UUID
+2025-12-29 21:50:28 | INFO     | logging:callHandlers:1706 - [cached since 111.8s ago] (UUID('cebadd6f-31c8-4d7c-b94d-550e83818ee6'),)
+2025-12-29 21:50:28 | INFO     | src.modules.pedidos.application.features.place_order.use_case:execute:107 - Stock reservado exitosamente
+2025-12-29 21:50:28 | INFO     | logging:callHandlers:1706 - INSERT INTO orders (order_id, customer_id, customer_name, customer_email, customer_phone, shipping_street, shipping_city, shipping_state, shipping_postal_code, shipping_country, status, total_amount, version, created_at, updated_at, confirmed_at, cancelled_at) VALUES ($1::UUID, $2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR, $7::VARCHAR, $8::VARCHAR, $9::VARCHAR, $10::VARCHAR, $11::orderstatusenum, $12::FLOAT, $13::INTEGER, $14::TIMESTAMP WITHOUT TIME ZONE, $15::TIMESTAMP WITHOUT TIME ZONE, $16::TIMESTAMP WITHOUT TIME ZONE, $17::TIMESTAMP WITHOUT TIME ZONE)
+2025-12-29 21:50:28 | INFO     | logging:callHandlers:1706 - [generated in 0.00112s] (UUID('bc236db5-e79d-4485-a3ff-2740ff99c0f5'), 'CUST-CURL', 'Curl User', 'curl@test.com', '12345678', '123 Debug St', 'LogCity', 'State', '12345', 'Colombia', 'confirmed', 199.98, 1, datetime.datetime(2025, 12, 29, 21, 50, 28, 826028), datetime.datetime(2025, 12, 29, 21, 50, 28, 826084), datetime.datetime(2025, 12, 29, 21, 50, 28, 826083), None)
+2025-12-29 21:50:28 | INFO     | logging:callHandlers:1706 - INSERT INTO order_items (order_id, product_id, product_name, quantity, unit_price) VALUES ($1::UUID, $2::UUID, $3::VARCHAR, $4::INTEGER, $5::FLOAT) RETURNING order_items.item_id
+2025-12-29 21:50:28 | INFO     | logging:callHandlers:1706 - [generated in 0.00122s] (UUID('bc236db5-e79d-4485-a3ff-2740ff99c0f5'), UUID('cebadd6f-31c8-4d7c-b94d-550e83818ee6'), 'Curl Test Product', 2, 99.99)
+2025-12-29 21:50:28 | INFO     | logging:callHandlers:1706 - SELECT orders.order_id 
+FROM orders 
+WHERE orders.order_id = $1::UUID
+2025-12-29 21:50:28 | INFO     | logging:callHandlers:1706 - [generated in 0.00145s] (UUID('bc236db5-e79d-4485-a3ff-2740ff99c0f5'),)
+2025-12-29 21:50:28 | INFO     | logging:callHandlers:1706 - SELECT order_items.item_id AS order_items_item_id, order_items.order_id AS order_items_order_id, order_items.product_id AS order_items_product_id, order_items.product_name AS order_items_product_name, order_items.quantity AS order_items_quantity, order_items.unit_price AS order_items_unit_price 
+FROM order_items 
+WHERE $1::UUID = order_items.order_id
+2025-12-29 21:50:28 | INFO     | logging:callHandlers:1706 - [generated in 0.00144s] (UUID('bc236db5-e79d-4485-a3ff-2740ff99c0f5'),)
+2025-12-29 21:50:28 | INFO     | src.modules.pedidos.application.features.place_order.use_case:execute:124 - Orden bc236db5-e79d-4485-a3ff-2740ff99c0f5 creada exitosamente con estado confirmed
+2025-12-29 21:50:28 | INFO     | logging:callHandlers:1706 - COMMIT
+2025-12-29 21:51:29 | INFO     | logging:callHandlers:1706 - Shutting down
+2025-12-29 21:51:29 | INFO     | logging:callHandlers:1706 - Waiting for application shutdown.
+2025-12-29 21:51:29 | INFO     | logging:callHandlers:1706 - Application shutdown complete.
+2025-12-29 21:51:29 | INFO     | logging:callHandlers:1706 - Finished server process [504]
+2025-12-29 22:13:02 | INFO     | logging:callHandlers:1706 - Started server process [2815]
+2025-12-29 22:13:02 | INFO     | logging:callHandlers:1706 - Waiting for application startup.
+2025-12-29 22:13:02 | INFO     | logging:callHandlers:1706 - Application startup complete.
+2025-12-29 22:15:05 | INFO     | logging:callHandlers:1706 - select pg_catalog.version()
+2025-12-29 22:15:05 | INFO     | logging:callHandlers:1706 - [raw sql] ()
+2025-12-29 22:15:05 | INFO     | logging:callHandlers:1706 - select current_schema()
+2025-12-29 22:15:05 | INFO     | logging:callHandlers:1706 - [raw sql] ()
+2025-12-29 22:15:05 | INFO     | logging:callHandlers:1706 - show standard_conforming_strings
+2025-12-29 22:15:05 | INFO     | logging:callHandlers:1706 - [raw sql] ()
+2025-12-29 22:15:05 | INFO     | logging:callHandlers:1706 - BEGIN (implicit)
+2025-12-29 22:15:05 | INFO     | logging:callHandlers:1706 - SELECT products.product_id, products.sku, products.name, products.description, products.price_amount, products.price_currency, products.stock_quantity, products.is_active, products.version, products.created_at, products.updated_at 
+FROM products 
+ LIMIT $1::INTEGER OFFSET $2::INTEGER
+2025-12-29 22:15:05 | INFO     | logging:callHandlers:1706 - [generated in 0.00123s] (100, 0)
+2025-12-29 22:15:05 | INFO     | logging:callHandlers:1706 - COMMIT
+2025-12-29 22:16:24 | INFO     | logging:callHandlers:1706 - BEGIN (implicit)
+2025-12-29 22:16:24 | INFO     | logging:callHandlers:1706 - SELECT products.product_id, products.sku, products.name, products.description, products.price_amount, products.price_currency, products.stock_quantity, products.is_active, products.version, products.created_at, products.updated_at 
+FROM products 
+WHERE products.product_id = $1::UUID
+2025-12-29 22:16:24 | INFO     | logging:callHandlers:1706 - [generated in 0.00128s] (UUID('e924245e-4580-4217-b064-3330fd79a1f5'),)
+2025-12-29 22:16:24 | INFO     | logging:callHandlers:1706 - COMMIT
+2025-12-29 22:17:00 | INFO     | logging:callHandlers:1706 - BEGIN (implicit)
+2025-12-29 22:17:00 | INFO     | logging:callHandlers:1706 - SELECT products.product_id, products.sku, products.name, products.description, products.price_amount, products.price_currency, products.stock_quantity, products.is_active, products.version, products.created_at, products.updated_at 
+FROM products 
+WHERE products.product_id = $1::UUID
+2025-12-29 22:17:00 | INFO     | logging:callHandlers:1706 - [cached since 35.59s ago] (UUID('cebadd6f-31c8-4d7c-b94d-550e83818ee6'),)
+2025-12-29 22:17:00 | INFO     | logging:callHandlers:1706 - COMMIT
+2025-12-29 22:20:06 | INFO     | src.modules.catalogo.application.features.update_product.use_case:execute:24 - Actualizando producto e924245e-4580-4217-b064-3330fd79a1f5
+2025-12-29 22:20:06 | INFO     | logging:callHandlers:1706 - BEGIN (implicit)
+2025-12-29 22:20:06 | INFO     | logging:callHandlers:1706 - SELECT products.product_id, products.sku, products.name, products.description, products.price_amount, products.price_currency, products.stock_quantity, products.is_active, products.version, products.created_at, products.updated_at 
+FROM products 
+WHERE products.product_id = $1::UUID
+2025-12-29 22:20:06 | INFO     | logging:callHandlers:1706 - [cached since 221.5s ago] (UUID('e924245e-4580-4217-b064-3330fd79a1f5'),)
+2025-12-29 22:20:06 | INFO     | logging:callHandlers:1706 - SELECT products.product_id, products.sku, products.name, products.description, products.price_amount, products.price_currency, products.stock_quantity, products.is_active, products.version, products.created_at, products.updated_at 
+FROM products 
+WHERE products.product_id = $1::UUID
+2025-12-29 22:20:06 | INFO     | logging:callHandlers:1706 - [cached since 221.5s ago] (UUID('e924245e-4580-4217-b064-3330fd79a1f5'),)
+2025-12-29 22:20:06 | INFO     | logging:callHandlers:1706 - UPDATE products SET name=$1::VARCHAR, price_amount=$2::FLOAT, stock_quantity=$3::INTEGER, version=$4::INTEGER, updated_at=$5::TIMESTAMP WITHOUT TIME ZONE WHERE products.product_id = $6::UUID
+2025-12-29 22:20:06 | INFO     | logging:callHandlers:1706 - [generated in 0.00804s] ('iPhone 18 PRO Max', 1000.2, 7, 4, datetime.datetime(2025, 12, 29, 22, 20, 6, 267825), UUID('e924245e-4580-4217-b064-3330fd79a1f5'))
+2025-12-29 22:20:06 | INFO     | logging:callHandlers:1706 - SELECT products.product_id, products.sku, products.name, products.description, products.price_amount, products.price_currency, products.stock_quantity, products.is_active, products.version, products.created_at, products.updated_at 
+FROM products 
+WHERE products.product_id = $1::UUID
+2025-12-29 22:20:06 | INFO     | logging:callHandlers:1706 - [generated in 0.00098s] (UUID('e924245e-4580-4217-b064-3330fd79a1f5'),)
+2025-12-29 22:20:06 | INFO     | src.modules.catalogo.application.features.update_product.use_case:execute:51 - Producto e924245e-4580-4217-b064-3330fd79a1f5 actualizado exitosamente
+2025-12-29 22:20:06 | INFO     | logging:callHandlers:1706 - COMMIT
+2025-12-29 22:21:28 | INFO     | logging:callHandlers:1706 - BEGIN (implicit)
+2025-12-29 22:21:28 | INFO     | logging:callHandlers:1706 - SELECT products.product_id, products.sku, products.name, products.description, products.price_amount, products.price_currency, products.stock_quantity, products.is_active, products.version, products.created_at, products.updated_at 
+FROM products 
+ LIMIT $1::INTEGER OFFSET $2::INTEGER
+2025-12-29 22:21:28 | INFO     | logging:callHandlers:1706 - [cached since 383.4s ago] (100, 0)
+2025-12-29 22:21:28 | INFO     | logging:callHandlers:1706 - COMMIT
+2025-12-29 22:27:36 | INFO     | src.modules.catalogo.application.features.delete_product.use_case:execute:23 - Iniciando eliminación de producto e924245e-4580-4217-b064-3330fd79a1f5 (lógica=True)
+2025-12-29 22:27:36 | INFO     | logging:callHandlers:1706 - BEGIN (implicit)
+2025-12-29 22:27:36 | INFO     | logging:callHandlers:1706 - SELECT products.product_id, products.sku, products.name, products.description, products.price_amount, products.price_currency, products.stock_quantity, products.is_active, products.version, products.created_at, products.updated_at 
+FROM products 
+WHERE products.product_id = $1::UUID
+2025-12-29 22:27:36 | INFO     | logging:callHandlers:1706 - [cached since 671.8s ago] (UUID('e924245e-4580-4217-b064-3330fd79a1f5'),)
+2025-12-29 22:27:36 | INFO     | logging:callHandlers:1706 - SELECT products.product_id, products.sku, products.name, products.description, products.price_amount, products.price_currency, products.stock_quantity, products.is_active, products.version, products.created_at, products.updated_at 
+FROM products 
+WHERE products.product_id = $1::UUID
+2025-12-29 22:27:36 | INFO     | logging:callHandlers:1706 - [cached since 671.8s ago] (UUID('e924245e-4580-4217-b064-3330fd79a1f5'),)
+2025-12-29 22:27:36 | INFO     | logging:callHandlers:1706 - UPDATE products SET is_active=$1::BOOLEAN, version=$2::INTEGER, updated_at=$3::TIMESTAMP WITHOUT TIME ZONE WHERE products.product_id = $4::UUID
+2025-12-29 22:27:36 | INFO     | logging:callHandlers:1706 - [generated in 0.00224s] (False, 5, datetime.datetime(2025, 12, 29, 22, 27, 36, 575219), UUID('e924245e-4580-4217-b064-3330fd79a1f5'))
+2025-12-29 22:27:36 | INFO     | logging:callHandlers:1706 - SELECT products.product_id, products.sku, products.name, products.description, products.price_amount, products.price_currency, products.stock_quantity, products.is_active, products.version, products.created_at, products.updated_at 
+FROM products 
+WHERE products.product_id = $1::UUID
+2025-12-29 22:27:36 | INFO     | logging:callHandlers:1706 - [cached since 450.3s ago] (UUID('e924245e-4580-4217-b064-3330fd79a1f5'),)
+2025-12-29 22:27:36 | INFO     | src.modules.catalogo.application.features.delete_product.use_case:execute:34 - Producto e924245e-4580-4217-b064-3330fd79a1f5 desactivado lógicamente
+2025-12-29 22:27:36 | INFO     | logging:callHandlers:1706 - COMMIT
+2025-12-29 22:29:50 | INFO     | logging:callHandlers:1706 - BEGIN (implicit)
+2025-12-29 22:29:50 | INFO     | logging:callHandlers:1706 - SELECT products.product_id, products.sku, products.name, products.description, products.price_amount, products.price_currency, products.stock_quantity, products.is_active, products.version, products.created_at, products.updated_at 
+FROM products 
+ LIMIT $1::INTEGER OFFSET $2::INTEGER
+2025-12-29 22:29:50 | INFO     | logging:callHandlers:1706 - [cached since 884.7s ago] (100, 0)
+2025-12-29 22:29:50 | INFO     | logging:callHandlers:1706 - COMMIT
+2025-12-29 22:30:52 | INFO     | logging:callHandlers:1706 - BEGIN (implicit)
+2025-12-29 22:30:52 | INFO     | logging:callHandlers:1706 - SELECT products.product_id, products.sku, products.name, products.description, products.price_amount, products.price_currency, products.stock_quantity, products.is_active, products.version, products.created_at, products.updated_at 
+FROM products 
+ LIMIT $1::INTEGER OFFSET $2::INTEGER
+2025-12-29 22:30:52 | INFO     | logging:callHandlers:1706 - [cached since 947.3s ago] (100, 0)
+2025-12-29 22:30:52 | INFO     | logging:callHandlers:1706 - COMMIT
+2025-12-29 22:32:49 | INFO     | logging:callHandlers:1706 - BEGIN (implicit)
+2025-12-29 22:32:49 | INFO     | logging:callHandlers:1706 - SELECT products.product_id, products.sku, products.name, products.description, products.price_amount, products.price_currency, products.stock_quantity, products.is_active, products.version, products.created_at, products.updated_at 
+FROM products 
+WHERE products.sku = $1::VARCHAR
+2025-12-29 22:32:49 | INFO     | logging:callHandlers:1706 - [generated in 0.00289s] ('PROD-12345',)
+2025-12-29 22:32:49 | INFO     | logging:callHandlers:1706 - COMMIT
+2025-12-29 22:33:16 | INFO     | logging:callHandlers:1706 - BEGIN (implicit)
+2025-12-29 22:33:16 | INFO     | logging:callHandlers:1706 - SELECT products.product_id, products.sku, products.name, products.description, products.price_amount, products.price_currency, products.stock_quantity, products.is_active, products.version, products.created_at, products.updated_at 
+FROM products 
+ LIMIT $1::INTEGER OFFSET $2::INTEGER
+2025-12-29 22:33:16 | INFO     | logging:callHandlers:1706 - [cached since 1091s ago] (100, 0)
+2025-12-29 22:33:16 | INFO     | logging:callHandlers:1706 - COMMIT
+2025-12-29 22:33:40 | INFO     | src.modules.pedidos.application.features.place_order.use_case:execute:64 - Iniciando proceso de creación de orden para cliente CUST-001
+2025-12-29 22:34:08 | INFO     | src.modules.pedidos.application.features.place_order.use_case:execute:64 - Iniciando proceso de creación de orden para cliente CUST-001
+2025-12-29 22:34:25 | INFO     | src.modules.pedidos.application.features.place_order.use_case:execute:64 - Iniciando proceso de creación de orden para cliente CUST-001
+2025-12-29 22:34:38 | INFO     | src.modules.pedidos.application.features.place_order.use_case:execute:64 - Iniciando proceso de creación de orden para cliente CUST-001
+2025-12-29 22:34:46 | INFO     | src.modules.pedidos.application.features.place_order.use_case:execute:64 - Iniciando proceso de creación de orden para cliente CUST-001
+2025-12-29 22:34:55 | INFO     | src.modules.pedidos.application.features.place_order.use_case:execute:64 - Iniciando proceso de creación de orden para cliente CUST-001
+2025-12-29 22:35:09 | INFO     | src.modules.pedidos.application.features.place_order.use_case:execute:64 - Iniciando proceso de creación de orden para cliente CUST-001
+2025-12-29 22:35:09 | INFO     | logging:callHandlers:1706 - BEGIN (implicit)
+2025-12-29 22:35:09 | INFO     | logging:callHandlers:1706 - SELECT products.product_id, products.sku, products.name, products.description, products.price_amount, products.price_currency, products.stock_quantity, products.is_active, products.version, products.created_at, products.updated_at 
+FROM products 
+WHERE products.product_id = $1::UUID
+2025-12-29 22:35:09 | INFO     | logging:callHandlers:1706 - [cached since 1124s ago] (UUID('91a00e3b-dcdd-41ba-b028-ed8b8ce17cda'),)
+2025-12-29 22:35:09 | INFO     | logging:callHandlers:1706 - SELECT products.product_id, products.sku, products.name, products.description, products.price_amount, products.price_currency, products.stock_quantity, products.is_active, products.version, products.created_at, products.updated_at 
+FROM products 
+WHERE products.product_id = $1::UUID
+2025-12-29 22:35:09 | INFO     | logging:callHandlers:1706 - [cached since 1124s ago] (UUID('91a00e3b-dcdd-41ba-b028-ed8b8ce17cda'),)
+2025-12-29 22:35:09 | ERROR    | src.modules.pedidos.application.features.place_order.use_case:execute:109 - Error al reservar stock: No se pudo reservar stock: Stock insuficiente para el producto 'Xiaomi Ultra 7A Pro'. Disponible: 2, Solicitado: 3
+2025-12-29 22:35:09 | INFO     | logging:callHandlers:1706 - ROLLBACK
+2025-12-29 22:35:23 | INFO     | src.modules.pedidos.application.features.place_order.use_case:execute:64 - Iniciando proceso de creación de orden para cliente CUST-001
+2025-12-29 22:35:23 | INFO     | logging:callHandlers:1706 - BEGIN (implicit)
+2025-12-29 22:35:23 | INFO     | logging:callHandlers:1706 - SELECT products.product_id, products.sku, products.name, products.description, products.price_amount, products.price_currency, products.stock_quantity, products.is_active, products.version, products.created_at, products.updated_at 
+FROM products 
+WHERE products.product_id = $1::UUID
+2025-12-29 22:35:23 | INFO     | logging:callHandlers:1706 - [cached since 1139s ago] (UUID('91a00e3b-dcdd-41ba-b028-ed8b8ce17cda'),)
+2025-12-29 22:35:23 | INFO     | logging:callHandlers:1706 - SELECT products.product_id, products.sku, products.name, products.description, products.price_amount, products.price_currency, products.stock_quantity, products.is_active, products.version, products.created_at, products.updated_at 
+FROM products 
+WHERE products.product_id = $1::UUID
+2025-12-29 22:35:23 | INFO     | logging:callHandlers:1706 - [cached since 1139s ago] (UUID('91a00e3b-dcdd-41ba-b028-ed8b8ce17cda'),)
+2025-12-29 22:35:23 | INFO     | logging:callHandlers:1706 - SELECT products.product_id, products.sku, products.name, products.description, products.price_amount, products.price_currency, products.stock_quantity, products.is_active, products.version, products.created_at, products.updated_at 
+FROM products 
+WHERE products.product_id = $1::UUID
+2025-12-29 22:35:23 | INFO     | logging:callHandlers:1706 - [cached since 1139s ago] (UUID('91a00e3b-dcdd-41ba-b028-ed8b8ce17cda'),)
+2025-12-29 22:35:23 | ERROR    | src.modules.pedidos.application.features.place_order.use_case:execute:109 - Error al reservar stock: No se pudo reservar stock: No se puede reservar stock de un producto inactivo: Xiaomi Ultra 7A Pro
+2025-12-29 22:35:23 | INFO     | logging:callHandlers:1706 - ROLLBACK
+2025-12-29 22:35:31 | INFO     | src.modules.pedidos.application.features.place_order.use_case:execute:64 - Iniciando proceso de creación de orden para cliente CUST-001
+2025-12-29 22:35:31 | INFO     | logging:callHandlers:1706 - BEGIN (implicit)
+2025-12-29 22:35:31 | INFO     | logging:callHandlers:1706 - SELECT products.product_id, products.sku, products.name, products.description, products.price_amount, products.price_currency, products.stock_quantity, products.is_active, products.version, products.created_at, products.updated_at 
+FROM products 
+WHERE products.product_id = $1::UUID
+2025-12-29 22:35:31 | INFO     | logging:callHandlers:1706 - [cached since 1147s ago] (UUID('91a00e3b-dcdd-41ba-b028-ed8b8ce17cda'),)
+2025-12-29 22:35:31 | INFO     | logging:callHandlers:1706 - SELECT products.product_id, products.sku, products.name, products.description, products.price_amount, products.price_currency, products.stock_quantity, products.is_active, products.version, products.created_at, products.updated_at 
+FROM products 
+WHERE products.product_id = $1::UUID
+2025-12-29 22:35:31 | INFO     | logging:callHandlers:1706 - [cached since 1147s ago] (UUID('91a00e3b-dcdd-41ba-b028-ed8b8ce17cda'),)
+2025-12-29 22:35:31 | INFO     | logging:callHandlers:1706 - SELECT products.product_id, products.sku, products.name, products.description, products.price_amount, products.price_currency, products.stock_quantity, products.is_active, products.version, products.created_at, products.updated_at 
+FROM products 
+WHERE products.product_id = $1::UUID
+2025-12-29 22:35:31 | INFO     | logging:callHandlers:1706 - [cached since 1147s ago] (UUID('91a00e3b-dcdd-41ba-b028-ed8b8ce17cda'),)
+2025-12-29 22:35:31 | ERROR    | src.modules.pedidos.application.features.place_order.use_case:execute:109 - Error al reservar stock: No se pudo reservar stock: No se puede reservar stock de un producto inactivo: Xiaomi Ultra 7A Pro
+2025-12-29 22:35:31 | INFO     | logging:callHandlers:1706 - ROLLBACK
+2025-12-29 22:36:08 | INFO     | src.modules.pedidos.application.features.place_order.use_case:execute:64 - Iniciando proceso de creación de orden para cliente CUST-001
+2025-12-29 22:36:08 | INFO     | logging:callHandlers:1706 - BEGIN (implicit)
+2025-12-29 22:36:08 | INFO     | logging:callHandlers:1706 - SELECT products.product_id, products.sku, products.name, products.description, products.price_amount, products.price_currency, products.stock_quantity, products.is_active, products.version, products.created_at, products.updated_at 
+FROM products 
+WHERE products.product_id = $1::UUID
+2025-12-29 22:36:08 | INFO     | logging:callHandlers:1706 - [cached since 1183s ago] (UUID('91a00e3b-dcdd-41ba-b028-ed8b8ce17cda'),)
+2025-12-29 22:36:08 | INFO     | logging:callHandlers:1706 - SELECT products.product_id, products.sku, products.name, products.description, products.price_amount, products.price_currency, products.stock_quantity, products.is_active, products.version, products.created_at, products.updated_at 
+FROM products 
+WHERE products.product_id = $1::UUID
+2025-12-29 22:36:08 | INFO     | logging:callHandlers:1706 - [cached since 1183s ago] (UUID('91a00e3b-dcdd-41ba-b028-ed8b8ce17cda'),)
+2025-12-29 22:36:08 | INFO     | logging:callHandlers:1706 - SELECT products.product_id, products.sku, products.name, products.description, products.price_amount, products.price_currency, products.stock_quantity, products.is_active, products.version, products.created_at, products.updated_at 
+FROM products 
+WHERE products.product_id = $1::UUID
+2025-12-29 22:36:08 | INFO     | logging:callHandlers:1706 - [cached since 1184s ago] (UUID('91a00e3b-dcdd-41ba-b028-ed8b8ce17cda'),)
+2025-12-29 22:36:08 | ERROR    | src.modules.pedidos.application.features.place_order.use_case:execute:109 - Error al reservar stock: No se pudo reservar stock: No se puede reservar stock de un producto inactivo: Xiaomi Ultra 7A Pro
+2025-12-29 22:36:08 | INFO     | logging:callHandlers:1706 - ROLLBACK
+2025-12-29 22:36:17 | INFO     | logging:callHandlers:1706 - BEGIN (implicit)
+2025-12-29 22:36:17 | INFO     | logging:callHandlers:1706 - SELECT products.product_id, products.sku, products.name, products.description, products.price_amount, products.price_currency, products.stock_quantity, products.is_active, products.version, products.created_at, products.updated_at 
+FROM products 
+ LIMIT $1::INTEGER OFFSET $2::INTEGER
+2025-12-29 22:36:17 | INFO     | logging:callHandlers:1706 - [cached since 1272s ago] (100, 0)
+2025-12-29 22:36:17 | INFO     | logging:callHandlers:1706 - COMMIT
+2025-12-29 22:36:43 | INFO     | logging:callHandlers:1706 - BEGIN (implicit)
+2025-12-29 22:36:43 | INFO     | logging:callHandlers:1706 - SELECT orders.order_id, orders.customer_id, orders.customer_name, orders.customer_email, orders.customer_phone, orders.shipping_street, orders.shipping_city, orders.shipping_state, orders.shipping_postal_code, orders.shipping_country, orders.status, orders.total_amount, orders.version, orders.created_at, orders.updated_at, orders.confirmed_at, orders.cancelled_at 
+FROM orders 
+ LIMIT $1::INTEGER OFFSET $2::INTEGER
+2025-12-29 22:36:43 | INFO     | logging:callHandlers:1706 - [generated in 0.00177s] (100, 0)
+2025-12-29 22:36:43 | INFO     | logging:callHandlers:1706 - SELECT order_items.order_id AS order_items_order_id, order_items.item_id AS order_items_item_id, order_items.product_id AS order_items_product_id, order_items.product_name AS order_items_product_name, order_items.quantity AS order_items_quantity, order_items.unit_price AS order_items_unit_price 
+FROM order_items 
+WHERE order_items.order_id IN ($1::UUID, $2::UUID, $3::UUID, $4::UUID, $5::UUID, $6::UUID)
+2025-12-29 22:36:43 | INFO     | logging:callHandlers:1706 - [generated in 0.00197s] (UUID('82dd3e40-9370-4788-b09a-79ec8c46aac2'), UUID('bd7ac2bb-145b-4f44-979a-d0896815bece'), UUID('03242168-f6fc-4597-91af-c03c27e52a21'), UUID('8eb60730-e86f-4c39-ab30-025d4a91d154'), UUID('1407ac5d-a056-47cd-bf0a-8732677cbd64'), UUID('bc236db5-e79d-4485-a3ff-2740ff99c0f5'))
+2025-12-29 22:36:43 | INFO     | logging:callHandlers:1706 - ROLLBACK
+2025-12-29 22:36:57 | INFO     | logging:callHandlers:1706 - BEGIN (implicit)
+2025-12-29 22:36:57 | INFO     | logging:callHandlers:1706 - SELECT orders.order_id, orders.customer_id, orders.customer_name, orders.customer_email, orders.customer_phone, orders.shipping_street, orders.shipping_city, orders.shipping_state, orders.shipping_postal_code, orders.shipping_country, orders.status, orders.total_amount, orders.version, orders.created_at, orders.updated_at, orders.confirmed_at, orders.cancelled_at 
+FROM orders 
+ LIMIT $1::INTEGER OFFSET $2::INTEGER
+2025-12-29 22:36:57 | INFO     | logging:callHandlers:1706 - [cached since 14.67s ago] (100, 0)
+2025-12-29 22:36:57 | INFO     | logging:callHandlers:1706 - SELECT order_items.order_id AS order_items_order_id, order_items.item_id AS order_items_item_id, order_items.product_id AS order_items_product_id, order_items.product_name AS order_items_product_name, order_items.quantity AS order_items_quantity, order_items.unit_price AS order_items_unit_price 
+FROM order_items 
+WHERE order_items.order_id IN ($1::UUID, $2::UUID, $3::UUID, $4::UUID, $5::UUID, $6::UUID)
+2025-12-29 22:36:57 | INFO     | logging:callHandlers:1706 - [cached since 14.64s ago] (UUID('82dd3e40-9370-4788-b09a-79ec8c46aac2'), UUID('bd7ac2bb-145b-4f44-979a-d0896815bece'), UUID('03242168-f6fc-4597-91af-c03c27e52a21'), UUID('8eb60730-e86f-4c39-ab30-025d4a91d154'), UUID('1407ac5d-a056-47cd-bf0a-8732677cbd64'), UUID('bc236db5-e79d-4485-a3ff-2740ff99c0f5'))
+2025-12-29 22:36:57 | INFO     | logging:callHandlers:1706 - ROLLBACK
+2025-12-29 22:37:07 | INFO     | src.modules.pedidos.application.features.place_order.use_case:execute:64 - Iniciando proceso de creación de orden para cliente CUST-001
+2025-12-29 22:37:58 | INFO     | logging:callHandlers:1706 - BEGIN (implicit)
+2025-12-29 22:37:58 | INFO     | logging:callHandlers:1706 - SELECT orders.order_id, orders.customer_id, orders.customer_name, orders.customer_email, orders.customer_phone, orders.shipping_street, orders.shipping_city, orders.shipping_state, orders.shipping_postal_code, orders.shipping_country, orders.status, orders.total_amount, orders.version, orders.created_at, orders.updated_at, orders.confirmed_at, orders.cancelled_at 
+FROM orders 
+ LIMIT $1::INTEGER OFFSET $2::INTEGER
+2025-12-29 22:37:58 | INFO     | logging:callHandlers:1706 - [cached since 75.65s ago] (100, 0)
+2025-12-29 22:37:58 | INFO     | logging:callHandlers:1706 - SELECT order_items.order_id AS order_items_order_id, order_items.item_id AS order_items_item_id, order_items.product_id AS order_items_product_id, order_items.product_name AS order_items_product_name, order_items.quantity AS order_items_quantity, order_items.unit_price AS order_items_unit_price 
+FROM order_items 
+WHERE order_items.order_id IN ($1::UUID, $2::UUID, $3::UUID, $4::UUID, $5::UUID, $6::UUID)
+2025-12-29 22:37:58 | INFO     | logging:callHandlers:1706 - [cached since 75.62s ago] (UUID('82dd3e40-9370-4788-b09a-79ec8c46aac2'), UUID('bd7ac2bb-145b-4f44-979a-d0896815bece'), UUID('03242168-f6fc-4597-91af-c03c27e52a21'), UUID('8eb60730-e86f-4c39-ab30-025d4a91d154'), UUID('1407ac5d-a056-47cd-bf0a-8732677cbd64'), UUID('bc236db5-e79d-4485-a3ff-2740ff99c0f5'))
+2025-12-29 22:37:58 | INFO     | logging:callHandlers:1706 - ROLLBACK

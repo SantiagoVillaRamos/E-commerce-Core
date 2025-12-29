@@ -3,16 +3,19 @@ services:
   db:
     image: postgres:15-alpine
     container_name: ecommerce-db
+    restart: unless-stopped
     environment:
-      POSTGRES_USER: ecommerce
-      POSTGRES_PASSWORD: ecommerce123
-      POSTGRES_DB: ecommerce
+      POSTGRES_USER: ${DB_USER:-ecommerce}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-ecommerce123}
+      POSTGRES_DB: ${DB_NAME:-ecommerce}
     ports:
-      - "5433:5432"
+      - "${DB_PORT:-5433}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - ecommerce-network
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U ecommerce" ]
+      test: [ "CMD-SHELL", "pg_isready -U $${POSTGRES_USER:-ecommerce}" ]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -21,22 +24,31 @@ services:
   app:
     build: .
     container_name: ecommerce-app
-    command: sh -c " echo 'Esperando a PostgreSQL...' && while ! nc -z db 5432; do sleep 1; done && echo 'PostgreSQL está listo!' && echo 'Aplicando migraciones...' && alembic upgrade head && echo 'Iniciando aplicación...' && uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload "
+    restart: unless-stopped
+    command: >
+      sh -c " echo 'Esperando a PostgreSQL...' && while ! nc -z db 5432; do sleep 1; done && echo 'PostgreSQL está listo!' && echo 'Aplicando migraciones...' && alembic upgrade head && echo 'Iniciando aplicación...' && uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload "
     ports:
-      - "8000:8000"
+      - "${APP_PORT:-8000}:8000"
     environment:
-      DATABASE_URL: postgresql://ecommerce:ecommerce123@db:5432/ecommerce
-      DEBUG: "true"
+      DATABASE_URL: ${DATABASE_URL:-postgresql+asyncpg://ecommerce:ecommerce123@db:5432/ecommerce}
+      DEBUG: ${DEBUG:-true}
+      APP_NAME: ${APP_NAME:-Ecommerce API}
     depends_on:
       db:
         condition: service_healthy
     volumes:
       - .:/app
+    networks:
+      - ecommerce-network
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8000/api/v1/catalogo/health" ]
       interval: 10s
       timeout: 5s
       retries: 5
+
+networks:
+  ecommerce-network:
+    driver: bridge
 
 volumes:
   postgres_data:

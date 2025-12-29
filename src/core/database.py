@@ -8,7 +8,7 @@ from src.core.config import settings
 
 
 # Convertir URL de PostgreSQL a async
-async_database_url = settings.database_url.replace(
+async_database_url = settings.get_database_url.replace(
     "postgresql://", "postgresql+asyncpg://"
 )
 
