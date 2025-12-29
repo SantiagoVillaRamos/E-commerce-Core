@@ -3,6 +3,7 @@ Caso de Uso: Cancelar Orden.
 Este use case cancela una orden y libera automáticamente el stock reservado.
 """
 from datetime import datetime
+from loguru import logger
 
 from src.modules.pedidos.application.features.cancel_order.command import CancelOrderCommand
 from src.modules.pedidos.application.features.cancel_order.response import CancelOrderResponse
@@ -56,6 +57,7 @@ class CancelOrderUseCase:
             NotFoundError: Si la orden no existe
             BusinessRuleViolation: Si la orden no puede cancelarse
         """
+        logger.info(f"Iniciando cancelación de orden {command.order_id}")
         # Fase 1: Obtener la orden
         order = await self.order_repository.get_by_id(command.order_id)
         
@@ -69,8 +71,11 @@ class CancelOrderUseCase:
         # Fase 3: Liberar el stock reservado
         stock_released = False
         try:
+            logger.debug(f"Liberando stock para {len(order.items)} items")
             stock_released = await self.inventory_gateway.release_stock(order.items)
+            logger.info("Stock liberado correctamente")
         except Exception as e:
+            logger.error(f"Fallo al liberar stock para orden {order.order_id}: {str(e)}")
             # Si falla la liberación de stock, revertir la cancelación
             # En una implementación con Unit of Work, esto sería automático
             raise BusinessRuleViolation(
@@ -79,6 +84,7 @@ class CancelOrderUseCase:
         
         # Fase 4: Actualizar la orden en la base de datos
         updated_order = await self.order_repository.update(order)
+        logger.info(f"Orden {updated_order.order_id} cancelada exitosamente")
         
         return CancelOrderResponse(
             order_id=updated_order.order_id,

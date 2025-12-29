@@ -8,6 +8,7 @@ from src.modules.catalogo.domain.entities import Product
 from src.modules.catalogo.domain.factories import ProductFactory
 from src.modules.catalogo.domain.repositories import ProductRepository
 from src.core.exceptions import BusinessRuleViolation
+from loguru import logger
 
 
 class CreateProductUseCase(ICreateProductUseCase):
@@ -42,6 +43,7 @@ class CreateProductUseCase(ICreateProductUseCase):
         Raises:
             BusinessRuleViolation: Si el SKU ya existe o hay violaciones de negocio
         """
+        logger.info(f"Creando nuevo producto con SKU: {command.sku}")
 
         product = ProductFactory.create_from_primitives(
                 sku=command.sku,

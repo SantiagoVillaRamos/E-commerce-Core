@@ -7,10 +7,19 @@ from typing import List
 from src.modules.catalogo.application.interfaces import (
     ICreateProductUseCase,
     IListProductsUseCase,
-    IReserveStockUseCase
+    IReserveStockUseCase,
+    IGetProductUseCase,
+    IUpdateProductUseCase,
+    IDeleteProductUseCase
 )
 from src.modules.catalogo.domain.entities import Product
 from src.modules.catalogo.application.features.create_product.command import CreateProductCommand
+from src.modules.catalogo.application.features.get_product.command import GetProductCommand
+from src.modules.catalogo.application.features.get_product.response import GetProductResponse
+from src.modules.catalogo.application.features.update_product.command import UpdateProductCommand
+from src.modules.catalogo.application.features.update_product.response import UpdateProductResponse
+from src.modules.catalogo.application.features.delete_product.command import DeleteProductCommand
+from src.modules.catalogo.application.features.delete_product.response import DeleteProductResponse
 from src.modules.catalogo.application.features.reserve_stock.command import ReserveStockCommand
 from src.modules.catalogo.application.features.reserve_stock.response import ReserveStockResponse
 
@@ -29,19 +38,20 @@ class CatalogoFacade:
         self,
         create_product_use_case: ICreateProductUseCase,
         list_products_use_case: IListProductsUseCase,
-        reserve_stock_use_case: IReserveStockUseCase
+        reserve_stock_use_case: IReserveStockUseCase,
+        get_product_use_case: IGetProductUseCase,
+        update_product_use_case: IUpdateProductUseCase,
+        delete_product_use_case: IDeleteProductUseCase
     ):
         """
         Constructor con inyección de dependencias.
-        
-        Args:
-            create_product_use_case: Caso de uso para crear productos
-            list_products_use_case: Caso de uso para listar productos
-            reserve_stock_use_case: Caso de uso para reservar stock
         """
         self._create_product = create_product_use_case
         self._list_products = list_products_use_case
         self._reserve_stock = reserve_stock_use_case
+        self._get_product = get_product_use_case
+        self._update_product = update_product_use_case
+        self._delete_product = delete_product_use_case
     
     # ==================== Operaciones de Productos ====================
     
@@ -94,4 +104,16 @@ class CatalogoFacade:
             BusinessRuleViolation: Si no hay stock suficiente
         """
         return await self._reserve_stock.execute(command)
+
+    async def get_product(self, command: GetProductCommand) -> GetProductResponse:
+        """Obtiene un producto por ID o SKU."""
+        return await self._get_product.execute(command)
+        
+    async def update_product(self, command: UpdateProductCommand) -> UpdateProductResponse:
+        """Actualiza un producto existente."""
+        return await self._update_product.execute(command)
+        
+    async def delete_product(self, command: DeleteProductCommand) -> DeleteProductResponse:
+        """Elimina o desactiva un producto."""
+        return await self._delete_product.execute(command)
 

@@ -41,9 +41,14 @@ class Price:
     amount: float
     currency: str = "USD"
     
+    MAX_PRICE = 1_000_000.0
+    
     def __post_init__(self):
         if self.amount <= 0:
             raise ValidationError("El precio debe ser mayor que 0")
+        
+        if self.amount > self.MAX_PRICE:
+            raise ValidationError(f"El precio no puede exceder {self.MAX_PRICE}")
         
         # Validar máximo 2 decimales
         if round(self.amount, 2) != self.amount:
@@ -82,9 +87,14 @@ class Stock:
     """
     quantity: int
     
+    MAX_STOCK = 100_000
+    
     def __post_init__(self):
         if self.quantity < 0:
             raise ValidationError("El stock no puede ser negativo")
+            
+        if self.quantity > self.MAX_STOCK:
+            raise ValidationError(f"El stock no puede exceder {self.MAX_STOCK}")
     
     def is_available(self, requested_quantity: int) -> bool:
         """Verifica si hay stock suficiente."""

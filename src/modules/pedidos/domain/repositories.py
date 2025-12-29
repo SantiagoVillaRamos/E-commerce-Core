@@ -44,3 +44,10 @@ class OrderRepository(ABC):
         Obtiene todas las órdenes con paginación.
         """
         pass
+
+    @abstractmethod
+    async def get_by_customer(self, customer_id: str, skip: int = 0, limit: int = 100) -> List[Order]:
+        """
+        Obtiene las órdenes de un cliente específico.
+        """
+        pass

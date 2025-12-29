@@ -3,6 +3,7 @@ Caso de Uso: Crear Orden (Place Order).
 Orquesta la lógica de aplicación para crear una orden.
 """
 from typing import List
+from loguru import logger
 from src.modules.pedidos.application.features.place_order.command import PlaceOrderCommand
 from src.modules.pedidos.application.features.place_order.response import (
     PlaceOrderResponse, OrderItemResponse
@@ -60,6 +61,8 @@ class PlaceOrderUseCase:
             StockReservationError: Si no hay stock suficiente
             NotFoundError: Si algún producto no existe
         """
+        logger.info(f"Iniciando proceso de creación de orden para cliente {command.customer_info.customer_id}")
+        
         # 1. Crear Value Objects
         customer_info = CustomerInfo(
             customer_id=command.customer_info.customer_id,
@@ -99,8 +102,11 @@ class PlaceOrderUseCase:
         
         # 3. PASO CRUCIAL: Verificar y reservar stock (comunicación con Catálogo)
         try:
+            logger.debug(f"Verificando y reservando stock para {len(order_items)} items")
             await self.inventory_gateway.verify_and_reserve_stock(order_items)
+            logger.info("Stock reservado exitosamente")
         except StockReservationError as e:
+            logger.error(f"Error al reservar stock: {e.message}")
             raise BusinessRuleViolation(f"No se pudo reservar el stock: {e.message}")
         
         # 4. Crear la entidad Order
@@ -115,6 +121,7 @@ class PlaceOrderUseCase:
         
         # 6. Persistir la orden
         saved_order = await self.order_repository.save(order)
+        logger.info(f"Orden {saved_order.order_id} creada exitosamente con estado {saved_order.status}")
         
         # 7. Mapear a Response DTO
         items_response = [

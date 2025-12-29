@@ -62,6 +62,7 @@ class Order:
     created_at: datetime = field(default_factory=datetime.utcnow)
     updated_at: datetime = field(default_factory=datetime.utcnow)
     confirmed_at: datetime = field(default=None)
+    cancelled_at: datetime = field(default=None)
     
     def __post_init__(self):
         """Validaciones de la entidad."""
@@ -115,6 +116,7 @@ class Order:
             raise BusinessRuleViolation("La orden ya está cancelada")
         
         self.status = OrderStatus.CANCELLED
+        self.cancelled_at = datetime.utcnow()
         self.updated_at = datetime.utcnow()
     
     def mark_as_processing(self) -> None:

@@ -5,12 +5,14 @@ Monta los routers de todos los módulos.
 from fastapi import FastAPI
 from src.core.config import settings
 from src.core.exception_handlers import register_exception_handlers
+from src.core.logging import setup_logging
 from src.modules.catalogo.api.router import router as catalogo_router
 from src.modules.pedidos.api.router import router as pedidos_router
 
 
 def create_app() -> FastAPI:
     """Factory para crear la aplicación FastAPI."""
+    setup_logging()
     
     app = FastAPI(
         title=settings.app_name,

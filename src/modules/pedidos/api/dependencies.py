@@ -11,6 +11,9 @@ from src.modules.pedidos.infrastructure.gateways import CatalogoInventoryGateway
 from src.modules.pedidos.application.features.place_order.use_case import PlaceOrderUseCase
 from src.modules.pedidos.application.features.cancel_order.use_case import CancelOrderUseCase
 from src.modules.pedidos.application.features.list_orders.use_case import ListOrdersUseCase
+from src.modules.pedidos.application.features.get_order.use_case import GetOrderUseCase
+from src.modules.pedidos.application.features.update_status.use_case import UpdateOrderStatusUseCase
+from src.modules.pedidos.application.features.get_orders_by_customer.use_case import GetOrdersByCustomerUseCase
 
 
 # Dependency: Order Repository
@@ -67,4 +70,28 @@ async def get_cancel_order_use_case(
     El gateway es necesario para liberar el stock.
     """
     return CancelOrderUseCase(repository, gateway)
+
+
+# Dependency: GetOrder Use Case
+async def get_get_order_use_case(
+    repository: Annotated[SQLAlchemyOrderRepository, Depends(get_order_repository)]
+) -> GetOrderUseCase:
+    """Inyecta el caso de uso GetOrder."""
+    return GetOrderUseCase(repository)
+
+
+# Dependency: UpdateOrderStatus Use Case
+async def get_update_status_use_case(
+    repository: Annotated[SQLAlchemyOrderRepository, Depends(get_order_repository)]
+) -> UpdateOrderStatusUseCase:
+    """Inyecta el caso de uso UpdateOrderStatus."""
+    return UpdateOrderStatusUseCase(repository)
+
+
+# Dependency: GetOrdersByCustomer Use Case
+async def get_get_orders_by_customer_use_case(
+    repository: Annotated[SQLAlchemyOrderRepository, Depends(get_order_repository)]
+) -> GetOrdersByCustomerUseCase:
+    """Inyecta el caso de uso GetOrdersByCustomer."""
+    return GetOrdersByCustomerUseCase(repository)
 

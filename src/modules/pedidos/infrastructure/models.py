@@ -1,8 +1,7 @@
 """
 Modelos de SQLAlchemy para el módulo de Pedidos.
 """
-from sqlalchemy import Column, String, Float, Integer, DateTime, ForeignKey, Enum as SQLEnum
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy import Column, String, Float, Integer, DateTime, ForeignKey, Enum as SQLEnum, Uuid
 from sqlalchemy.orm import relationship
 from datetime import datetime
 import uuid
@@ -29,7 +28,7 @@ class OrderModel(Base):
     __tablename__ = "orders"
     
     # Identidad
-    order_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    order_id = Column(Uuid, primary_key=True, default=uuid.uuid4)
     
     # Información del cliente
     customer_id = Column(String(100), nullable=False, index=True)
@@ -55,6 +54,7 @@ class OrderModel(Base):
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
     updated_at = Column(DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
     confirmed_at = Column(DateTime, nullable=True)
+    cancelled_at = Column(DateTime, nullable=True)
 
     
     # Relación con items
@@ -72,10 +72,10 @@ class OrderItemModel(Base):
     
     # Identidad
     item_id = Column(Integer, primary_key=True, autoincrement=True)
-    order_id = Column(UUID(as_uuid=True), ForeignKey("orders.order_id"), nullable=False)
+    order_id = Column(Uuid, ForeignKey("orders.order_id"), nullable=False)
     
     # Información del producto
-    product_id = Column(UUID(as_uuid=True), nullable=False)
+    product_id = Column(Uuid, nullable=False)
     product_name = Column(String(255), nullable=False)
     quantity = Column(Integer, nullable=False)
     unit_price = Column(Float, nullable=False)

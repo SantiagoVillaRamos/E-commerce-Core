@@ -65,7 +65,8 @@ class SQLAlchemyOrderRepository(OrderRepository):
             total_amount=model.total_amount,
             created_at=model.created_at,
             updated_at=model.updated_at,
-            confirmed_at=model.confirmed_at
+            confirmed_at=model.confirmed_at,
+            cancelled_at=model.cancelled_at
         )
     
     def _to_model(self, order: Order) -> OrderModel:
@@ -134,6 +135,7 @@ class SQLAlchemyOrderRepository(OrderRepository):
         model.total_amount = order.total_amount
         model.updated_at = order.updated_at
         model.confirmed_at = order.confirmed_at
+        model.cancelled_at = order.cancelled_at
         
         # Incrementar versión para concurrencia optimista
         model.version = model.version + 1
@@ -180,3 +182,17 @@ class SQLAlchemyOrderRepository(OrderRepository):
         await self.session.delete(model)
         await self.session.flush()
         return True
+
+    async def get_by_customer(self, customer_id: str, skip: int = 0, limit: int = 100) -> List[Order]:
+        """Obtiene las órdenes de un cliente con paginación."""
+        stmt = (
+            select(OrderModel)
+            .where(OrderModel.customer_id == customer_id)
+            .options(selectinload(OrderModel.items))
+            .offset(skip)
+            .limit(limit)
+        )
+        result = await self.session.execute(stmt)
+        models = result.scalars().all()
+        
+        return [self._to_domain(model) for model in models]

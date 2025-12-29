@@ -2,8 +2,7 @@
 Modelos de SQLAlchemy para el módulo de Catálogo.
 Estos modelos representan la estructura de la base de datos.
 """
-from sqlalchemy import Column, String, Float, Integer, Boolean, DateTime
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy import Column, String, Float, Integer, Boolean, DateTime, Uuid
 from datetime import datetime
 import uuid
 
@@ -17,8 +16,8 @@ class ProductModel(Base):
     """
     __tablename__ = "products"
     
-    # Columnas
-    product_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    # Identidad
+    product_id = Column(Uuid, primary_key=True, default=uuid.uuid4)
     sku = Column(String(50), unique=True, nullable=False, index=True)
     name = Column(String(255), nullable=False)
     description = Column(String(1000), nullable=False, default="")

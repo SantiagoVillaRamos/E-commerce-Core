@@ -2,6 +2,7 @@
 Adaptadores de Gateway para comunicación con otros módulos.
 Este es el COMPONENTE CLAVE que conecta el módulo de Pedidos con el módulo de Catálogo.
 """
+from loguru import logger
 from typing import List
 from uuid import UUID
 from sqlalchemy.ext.asyncio import AsyncSession

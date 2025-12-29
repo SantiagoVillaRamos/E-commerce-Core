@@ -11,6 +11,12 @@ from src.modules.catalogo.application.features.reserve_stock.command import Rese
 from src.modules.catalogo.application.features.reserve_stock.response import ReserveStockResponse
 from src.modules.catalogo.application.features.release_stock.command import ReleaseStockCommand
 from src.modules.catalogo.application.features.release_stock.response import ReleaseStockResponse
+from src.modules.catalogo.application.features.get_product.command import GetProductCommand
+from src.modules.catalogo.application.features.get_product.response import GetProductResponse
+from src.modules.catalogo.application.features.update_product.command import UpdateProductCommand
+from src.modules.catalogo.application.features.update_product.response import UpdateProductResponse
+from src.modules.catalogo.application.features.delete_product.command import DeleteProductCommand
+from src.modules.catalogo.application.features.delete_product.response import DeleteProductResponse
 
 
 
@@ -111,5 +117,26 @@ class IReleaseStockUseCase(ABC):
         Raises:
             NotFoundError: Si algún producto no existe
         """
+        pass
+
+
+class IGetProductUseCase(ABC):
+    """Interfaz para el caso de uso de obtener producto."""
+    @abstractmethod
+    async def execute(self, command: GetProductCommand) -> GetProductResponse:
+        pass
+
+
+class IUpdateProductUseCase(ABC):
+    """Interfaz para el caso de uso de actualizar producto."""
+    @abstractmethod
+    async def execute(self, command: UpdateProductCommand) -> UpdateProductResponse:
+        pass
+
+
+class IDeleteProductUseCase(ABC):
+    """Interfaz para el caso de uso de eliminar producto."""
+    @abstractmethod
+    async def execute(self, command: DeleteProductCommand) -> DeleteProductResponse:
         pass
 

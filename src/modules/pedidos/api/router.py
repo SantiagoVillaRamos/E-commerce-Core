@@ -11,7 +11,23 @@ from src.modules.pedidos.application.features.cancel_order.command import Cancel
 from src.modules.pedidos.application.features.cancel_order.response import CancelOrderResponse
 from src.modules.pedidos.application.features.cancel_order.use_case import CancelOrderUseCase
 from src.modules.pedidos.application.features.list_orders.use_case import ListOrdersUseCase
-from src.modules.pedidos.api.dependencies import get_place_order_use_case, get_list_orders_use_case, get_cancel_order_use_case
+from src.modules.pedidos.application.features.get_order.command import GetOrderCommand
+from src.modules.pedidos.application.features.get_order.response import GetOrderResponse
+from src.modules.pedidos.application.features.update_status.command import UpdateOrderStatusCommand
+from src.modules.pedidos.application.features.update_status.response import UpdateOrderStatusResponse
+from src.modules.pedidos.application.features.get_orders_by_customer.command import GetOrdersByCustomerCommand
+from src.modules.pedidos.application.features.get_orders_by_customer.response import GetOrdersByCustomerResponse
+from src.modules.pedidos.api.dependencies import (
+    get_place_order_use_case,
+    get_cancel_order_use_case,
+    get_list_orders_use_case,
+    get_get_order_use_case,
+    get_update_status_use_case,
+    get_get_orders_by_customer_use_case
+)
+from src.modules.pedidos.application.features.get_order.use_case import GetOrderUseCase
+from src.modules.pedidos.application.features.update_status.use_case import UpdateOrderStatusUseCase
+from src.modules.pedidos.application.features.get_orders_by_customer.use_case import GetOrdersByCustomerUseCase
 from src.modules.pedidos.domain.gateways import StockReservationError
 from src.core.exceptions import DomainError, BusinessRuleViolation, ValidationError, NotFoundError
 
@@ -205,6 +221,68 @@ async def cancel_order(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail={"error": "Internal Server Error", "message": str(e)}
         )
+
+
+@router.get(
+    "/orders/{order_id}",
+    response_model=GetOrderResponse,
+    summary="Obtener orden por ID",
+    description="Busca una orden específica por su UUID"
+)
+async def get_order_by_id(
+    order_id: str,
+    use_case: GetOrderUseCase = Depends(get_get_order_use_case)
+) -> GetOrderResponse:
+    """Obtiene una orden por su ID."""
+    try:
+        command = GetOrderCommand(order_id=order_id)
+        return await use_case.execute(command)
+    except NotFoundError as e:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+
+
+@router.patch(
+    "/orders/{order_id}/status",
+    response_model=UpdateOrderStatusResponse,
+    summary="Actualizar estado de orden",
+    description="Actualiza el estado de una orden existente"
+)
+async def update_order_status(
+    order_id: str,
+    command: UpdateOrderStatusCommand,
+    use_case: UpdateOrderStatusUseCase = Depends(get_update_status_use_case)
+) -> UpdateOrderStatusResponse:
+    """Actualiza el estado de una orden."""
+    try:
+        if str(command.order_id) != order_id:
+            command.order_id = order_id
+        return await use_case.execute(command)
+    except (NotFoundError, BusinessRuleViolation) as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+
+
+@router.get(
+    "/orders/customer/{customer_id}",
+    response_model=GetOrdersByCustomerResponse,
+    summary="Obtener órdenes por cliente",
+    description="Obtiene todas las órdenes asociadas a un cliente"
+)
+async def get_orders_by_customer(
+    customer_id: str,
+    skip: int = 0,
+    limit: int = 100,
+    use_case: GetOrdersByCustomerUseCase = Depends(get_get_orders_by_customer_use_case)
+) -> GetOrdersByCustomerResponse:
+    """Obtiene las órdenes de un cliente."""
+    try:
+        command = GetOrdersByCustomerCommand(customer_id=customer_id, skip=skip, limit=limit)
+        return await use_case.execute(command)
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
 
 
 @router.get(

@@ -93,7 +93,7 @@ class TestCustomerInfo:
             customer_id="CUST-001",
             name="Juan Pérez",
             email="juan@example.com",
-            phone="+57 300 1234567"
+            phone="+573001234567"
         )
         assert info.customer_id == "CUST-001"
         assert info.name == "Juan Pérez"
