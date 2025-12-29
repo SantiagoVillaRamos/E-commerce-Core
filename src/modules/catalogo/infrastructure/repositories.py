@@ -1,7 +1,3 @@
-"""
-Adaptador del Repositorio de Productos usando SQLAlchemy.
-Implementa el puerto ProductRepository definido en el dominio.
-"""
 from typing import Optional, List
 from uuid import UUID
 from sqlalchemy import select
@@ -12,6 +8,7 @@ from src.modules.catalogo.domain.value_objects import SKU
 from src.modules.catalogo.domain.repositories import ProductRepository
 from src.modules.catalogo.infrastructure.models import ProductModel
 from src.modules.catalogo.infrastructure.mappers import ProductMapper
+from src.core.exceptions import ConcurrencyError
 
 
 class SQLAlchemyProductRepository(ProductRepository):

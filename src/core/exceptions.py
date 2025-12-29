@@ -147,3 +147,46 @@ class AuthorizationError(DomainError):
     - Token inválido
     """
     pass
+
+
+class ConcurrencyError(DomainError):
+    """
+    Excepción para conflictos de concurrencia optimista.
+    
+    Se lanza cuando se intenta actualizar una entidad que ha sido
+    modificada por otro proceso desde que fue leída.
+    
+    Ejemplos:
+    - Actualización de producto con versión desactualizada
+    - Actualización de orden con versión desactualizada
+    """
+    
+    def __init__(
+        self,
+        entity_name: str,
+        entity_id: str,
+        expected_version: int,
+        actual_version: int,
+        **kwargs
+    ):
+        self.entity_name = entity_name
+        self.entity_id = entity_id
+        self.expected_version = expected_version
+        self.actual_version = actual_version
+        
+        message = (
+            f"Conflicto de concurrencia en {entity_name} '{entity_id}'. "
+            f"Versión esperada: {expected_version}, versión actual: {actual_version}. "
+            f"La entidad fue modificada por otro proceso."
+        )
+        
+        context = kwargs.pop('context', {})
+        context.update({
+            'entity_type': entity_name,
+            'entity_id': entity_id,
+            'expected_version': expected_version,
+            'actual_version': actual_version
+        })
+        
+        super().__init__(message, context=context, **kwargs)
+

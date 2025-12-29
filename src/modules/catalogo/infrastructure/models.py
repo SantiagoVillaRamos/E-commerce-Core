@@ -33,9 +33,13 @@ class ProductModel(Base):
     # Estado
     is_active = Column(Boolean, nullable=False, default=True)
     
+    # Control de concurrencia optimista
+    version = Column(Integer, nullable=False, default=1)
+    
     # Timestamps
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
     updated_at = Column(DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
+
     
     def __repr__(self):
         return f"<ProductModel(sku='{self.sku}', name='{self.name}')>"

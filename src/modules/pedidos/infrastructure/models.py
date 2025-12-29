@@ -47,10 +47,14 @@ class OrderModel(Base):
     status = Column(SQLEnum(OrderStatusEnum), nullable=False, default=OrderStatusEnum.PENDING)
     total_amount = Column(Float, nullable=False)
     
+    # Control de concurrencia optimista
+    version = Column(Integer, nullable=False, default=1)
+    
     # Timestamps
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
     updated_at = Column(DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
     confirmed_at = Column(DateTime, nullable=True)
+
     
     # Relación con items
     items = relationship("OrderItemModel", back_populates="order", cascade="all, delete-orphan")

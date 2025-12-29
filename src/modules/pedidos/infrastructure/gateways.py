@@ -14,8 +14,13 @@ from src.modules.catalogo.application.features.reserve_stock.command import (
     ReserveStockCommand, ReserveStockItemCommand
 )
 from src.modules.catalogo.application.features.reserve_stock.use_case import ReserveStockUseCase
+from src.modules.catalogo.application.features.release_stock.command import (
+    ReleaseStockCommand, ReleaseStockItemCommand
+)
+from src.modules.catalogo.application.features.release_stock.use_case import ReleaseStockUseCase
 from src.modules.catalogo.infrastructure.repositories import SQLAlchemyProductRepository
 from src.core.exceptions import BusinessRuleViolation, NotFoundError
+
 
 
 class CatalogoInventoryGateway(InventoryGateway):
@@ -42,8 +47,10 @@ class CatalogoInventoryGateway(InventoryGateway):
         # Crear el repositorio de productos
         self.product_repository = SQLAlchemyProductRepository(db_session)
         
-        # Crear el use case de reserva de stock
+        # Crear los use cases de stock
         self.reserve_stock_use_case = ReserveStockUseCase(self.product_repository)
+        self.release_stock_use_case = ReleaseStockUseCase(self.product_repository)
+
     
     async def verify_and_reserve_stock(self, items: List[OrderItem]) -> bool:
         """
@@ -84,12 +91,31 @@ class CatalogoInventoryGateway(InventoryGateway):
         """
         Libera stock previamente reservado.
         
-        TODO: Implementar el use case ReleaseStock en el módulo de Catálogo.
-        Por ahora retorna True como placeholder.
+        Este método llama al ReleaseStockUseCase del módulo de Catálogo
+        para devolver el stock cuando se cancela una orden.
         """
-        # Placeholder: En una implementación completa, llamaríamos a un
-        # ReleaseStockUseCase del módulo de Catálogo
-        return True
+        try:
+            # Convertir OrderItems a ReleaseStockCommand
+            release_items = [
+                ReleaseStockItemCommand(
+                    product_id=item.product_id,
+                    quantity=item.quantity.value
+                )
+                for item in items
+            ]
+            
+            command = ReleaseStockCommand(items=release_items)
+            
+            # LLAMADA AL MÓDULO DE CATÁLOGO
+            response = await self.release_stock_use_case.execute(command)
+            
+            return response.success
+            
+        except NotFoundError as e:
+            raise StockReservationError(f"Producto no encontrado: {e.message}")
+        except Exception as e:
+            raise StockReservationError(f"Error inesperado al liberar stock: {str(e)}")
+
     
     async def verify_product_exists(self, product_id: UUID) -> bool:
         """

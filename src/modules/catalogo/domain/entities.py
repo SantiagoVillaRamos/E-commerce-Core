@@ -81,6 +81,18 @@ class Product:
         self.stock = self.stock.increase(quantity)
         self.updated_at = datetime.utcnow()
     
+    def release_stock(self, quantity: int) -> None:
+        """
+        Libera stock previamente reservado.
+        Este método se usa cuando se cancela una orden.
+        
+        A diferencia de replenish_stock, este método es específicamente
+        para devolver stock que había sido reservado anteriormente.
+        """
+        self.stock = self.stock.increase(quantity)
+        self.updated_at = datetime.utcnow()
+
+    
     def deactivate(self) -> None:
         """
         Desactiva el producto.

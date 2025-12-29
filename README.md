@@ -54,9 +54,31 @@ DATABASE_URL=postgresql://user:password@localhost:5432/ecommerce
 
 ### 4. Inicializar base de datos
 
+El proyecto usa **Alembic** para gestión de migraciones de base de datos.
+
+#### Opción A: Usar Alembic (Recomendado)
+
+```bash
+# Aplicar todas las migraciones
+alembic upgrade head
+
+# Ver estado actual
+alembic current
+
+# Ver historial de migraciones
+alembic history
+```
+
+#### Opción B: Script legacy (solo desarrollo)
+
 ```bash
 python -m src.scripts.init_db
 ```
+
+> [!WARNING]
+> El script `init_db.py` es legacy y solo debe usarse en desarrollo local.
+> En producción, siempre usa Alembic para gestionar el esquema.
+
 
 ## 🏃 Ejecutar la aplicación
 
@@ -173,10 +195,65 @@ curl -X POST "http://localhost:8000/api/v1/pedidos/orders" \
 - **Bounded Contexts**: Cada módulo es un contexto delimitado independiente
 - **Anti-Corruption Layer**: El Gateway protege el dominio de Pedidos
 
+## 🔄 Migraciones de Base de Datos
+
+El proyecto usa **Alembic** para gestión profesional del esquema de base de datos.
+
+### Comandos Principales
+
+```bash
+# Ver estado actual de migraciones
+alembic current
+
+# Ver historial de migraciones
+alembic history --verbose
+
+# Aplicar todas las migraciones pendientes
+alembic upgrade head
+
+# Aplicar una migración específica
+alembic upgrade <revision>
+
+# Revertir una migración
+alembic downgrade -1
+
+# Revertir a una revisión específica
+alembic downgrade <revision>
+
+# Generar nueva migración automáticamente
+alembic revision --autogenerate -m "descripción del cambio"
+
+# Crear migración vacía
+alembic revision -m "descripción del cambio"
+```
+
+### Estructura de Migraciones
+
+```
+alembic/
+├── versions/           # Scripts de migración
+│   └── 001_initial_schema.py
+├── env.py             # Configuración de entorno (async)
+└── script.py.mako     # Template para nuevas migraciones
+```
+
+### Migraciones Incluidas
+
+1. **001_initial_schema**: Esquema inicial con tablas `products`, `orders`, `order_items`
+   - Incluye campos `version` para control de concurrencia optimista
+   - Índices en `sku` y `customer_id`
+
+> [!IMPORTANT]
+> Siempre revisa las migraciones generadas automáticamente antes de aplicarlas.
+> Alembic puede no detectar todos los cambios correctamente.
+
 ## 🛠️ Stack Tecnológico
+
 
 - **Framework**: FastAPI
 - **ORM**: SQLAlchemy 2.0 (async)
 - **Database**: PostgreSQL
+- **Migrations**: Alembic
 - **Validation**: Pydantic
 - **Testing**: Pytest
+

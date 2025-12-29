@@ -9,6 +9,9 @@ from src.modules.catalogo.application.features.create_product.command import Cre
 from src.modules.catalogo.domain.entities import Product
 from src.modules.catalogo.application.features.reserve_stock.command import ReserveStockCommand
 from src.modules.catalogo.application.features.reserve_stock.response import ReserveStockResponse
+from src.modules.catalogo.application.features.release_stock.command import ReleaseStockCommand
+from src.modules.catalogo.application.features.release_stock.response import ReleaseStockResponse
+
 
 
 class ICreateProductUseCase(ABC):
@@ -84,3 +87,29 @@ class IReserveStockUseCase(ABC):
             BusinessRuleViolation: Si no hay stock suficiente
         """
         pass
+
+
+class IReleaseStockUseCase(ABC):
+    """
+    Interfaz para el caso de uso de liberar stock.
+    
+    Esta interfaz define el contrato que debe cumplir cualquier
+    implementación del caso de uso de liberación de stock.
+    """
+    
+    @abstractmethod
+    async def execute(self, command: ReleaseStockCommand) -> ReleaseStockResponse:
+        """
+        Ejecuta la liberación de stock.
+        
+        Args:
+            command: Datos de los productos y cantidades a liberar
+            
+        Returns:
+            Respuesta con el resultado de la liberación
+            
+        Raises:
+            NotFoundError: Si algún producto no existe
+        """
+        pass
+

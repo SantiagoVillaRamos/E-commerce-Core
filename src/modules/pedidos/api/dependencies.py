@@ -9,8 +9,9 @@ from src.core.database import get_db_session
 from src.modules.pedidos.infrastructure.repositories import SQLAlchemyOrderRepository
 from src.modules.pedidos.infrastructure.gateways import CatalogoInventoryGateway
 from src.modules.pedidos.application.features.place_order.use_case import PlaceOrderUseCase
-
+from src.modules.pedidos.application.features.cancel_order.use_case import CancelOrderUseCase
 from src.modules.pedidos.application.features.list_orders.use_case import ListOrdersUseCase
+
 
 # Dependency: Order Repository
 async def get_order_repository(
@@ -52,3 +53,18 @@ async def get_list_orders_use_case(
     """Inyecta el caso de uso ListOrders."""
     
     return ListOrdersUseCase(repository)
+
+
+# Dependency: CancelOrder Use Case
+async def get_cancel_order_use_case(
+    repository: Annotated[SQLAlchemyOrderRepository, Depends(get_order_repository)],
+    gateway: Annotated[CatalogoInventoryGateway, Depends(get_inventory_gateway)]
+) -> CancelOrderUseCase:
+    """
+    Inyecta el caso de uso CancelOrder.
+    
+    Este use case recibe AMBOS: el repositorio Y el gateway.
+    El gateway es necesario para liberar el stock.
+    """
+    return CancelOrderUseCase(repository, gateway)
+
