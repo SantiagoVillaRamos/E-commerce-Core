@@ -63,44 +63,88 @@ class SQLAlchemyProductRepository(ProductRepository):
 
     
     async def get_by_id(self, product_id: UUID) -> Optional[Product]:
-        """Busca un producto por su ID."""
-        stmt = select(ProductModel).where(ProductModel.product_id == product_id)
+        """Busca un producto por su ID (solo si no está borrado)."""
+        stmt = select(ProductModel).where(
+            ProductModel.product_id == product_id,
+            ProductModel.deleted_at == None
+        )
         result = await self.session.execute(stmt)
         model = result.scalar_one_or_none()
         
         return ProductMapper.to_domain(model) if model else None
     
     async def get_by_sku(self, sku: SKU) -> Optional[Product]:
-        """Busca un producto por su SKU."""
-        stmt = select(ProductModel).where(ProductModel.sku == str(sku))
+        """Busca un producto por su SKU (solo si no está borrado)."""
+        stmt = select(ProductModel).where(
+            ProductModel.sku == str(sku),
+            ProductModel.deleted_at == None
+        )
         result = await self.session.execute(stmt)
         model = result.scalar_one_or_none()
         
         return ProductMapper.to_domain(model) if model else None
     
     async def get_all(self, skip: int = 0, limit: int = 100) -> List[Product]:
-        """Obtiene todos los productos con paginación."""
-        stmt = select(ProductModel).offset(skip).limit(limit)
+        """Obtiene todos los productos no borrados con paginación."""
+        stmt = select(ProductModel).where(
+            ProductModel.deleted_at == None
+        ).offset(skip).limit(limit)
         result = await self.session.execute(stmt)
         models = result.scalars().all()
         
         return [ProductMapper.to_domain(model) for model in models]
     
     async def delete(self, product_id: UUID) -> bool:
-        """Elimina un producto por su ID."""
-        stmt = select(ProductModel).where(ProductModel.product_id == product_id)
+        """Realiza un BORRADO LÓGICO de un producto."""
+        stmt = select(ProductModel).where(
+            ProductModel.product_id == product_id,
+            ProductModel.deleted_at == None
+        )
         result = await self.session.execute(stmt)
         model = result.scalar_one_or_none()
         
         if not model:
             return False
         
-        await self.session.delete(model)
+        model.soft_delete()
         await self.session.flush()
         return True
     
     async def exists_by_sku(self, sku: SKU) -> bool:
-        """Verifica si existe un producto con el SKU dado."""
-        stmt = select(ProductModel.product_id).where(ProductModel.sku == str(sku))
+        """Verifica si existe un producto con el SKU dado (no borrado)."""
+        stmt = select(ProductModel.product_id).where(
+            ProductModel.sku == str(sku),
+            ProductModel.deleted_at == None
+        )
         result = await self.session.execute(stmt)
         return result.scalar_one_or_none() is not None
+
+    async def search(
+        self,
+        query: Optional[str] = None,
+        min_price: Optional[float] = None,
+        max_price: Optional[float] = None,
+        skip: int = 0,
+        limit: int = 20
+    ) -> List[Product]:
+        """Búsqueda avanzada con filtros dinámicos."""
+        stmt = select(ProductModel).where(ProductModel.deleted_at == None)
+        
+        if query:
+            # Simulación de búsqueda de texto simple (mejorar con to_tsvector en Postgres real)
+            stmt = stmt.where(
+                (ProductModel.name.ilike(f"%{query}%")) | 
+                (ProductModel.description.ilike(f"%{query}%"))
+            )
+        
+        if min_price is not None:
+            stmt = stmt.where(ProductModel.price_amount >= min_price)
+            
+        if max_price is not None:
+            stmt = stmt.where(ProductModel.price_amount <= max_price)
+            
+        stmt = stmt.offset(skip).limit(limit)
+        result = await self.session.execute(stmt)
+        models = result.scalars().all()
+        
+        return [ProductMapper.to_domain(model) for model in models]

@@ -123,7 +123,16 @@ class PlaceOrderUseCase:
         saved_order = await self.order_repository.save(order)
         logger.info(f"Orden {saved_order.order_id} creada exitosamente con estado {saved_order.status}")
         
-        # 7. Mapear a Response DTO
+        # 7. PUBLICAR EVENTOS DE DOMINIO
+        from src.core.events.event_bus import EventBus
+        try:
+            await EventBus.publish(order.domain_events)
+            order.domain_events.clear()  # Limpiar eventos tras publicar
+        except Exception as e:
+            logger.error(f"Error al publicar eventos de dominio: {str(e)}")
+            # No fallamos la transacción por errores en eventos secundarios (depende del negocio)
+        
+        # 8. Mapear a Response DTO
         items_response = [
             OrderItemResponse(
                 product_id=item.product_id,

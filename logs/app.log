@@ -754,3 +754,926 @@ FROM order_items
 WHERE order_items.order_id IN ($1::UUID, $2::UUID, $3::UUID, $4::UUID, $5::UUID, $6::UUID)
 2025-12-29 22:37:58 | INFO     | logging:callHandlers:1706 - [cached since 75.62s ago] (UUID('82dd3e40-9370-4788-b09a-79ec8c46aac2'), UUID('bd7ac2bb-145b-4f44-979a-d0896815bece'), UUID('03242168-f6fc-4597-91af-c03c27e52a21'), UUID('8eb60730-e86f-4c39-ab30-025d4a91d154'), UUID('1407ac5d-a056-47cd-bf0a-8732677cbd64'), UUID('bc236db5-e79d-4485-a3ff-2740ff99c0f5'))
 2025-12-29 22:37:58 | INFO     | logging:callHandlers:1706 - ROLLBACK
+2025-12-29 23:02:54 | INFO     | logging:callHandlers:1706 - Started server process [36]
+2025-12-29 23:02:54 | INFO     | logging:callHandlers:1706 - Waiting for application startup.
+2025-12-29 23:02:54 | INFO     | logging:callHandlers:1706 - Application startup complete.
+2025-12-29 23:02:54 | INFO     | logging:callHandlers:1706 - Shutting down
+2025-12-29 23:02:55 | INFO     | logging:callHandlers:1706 - Waiting for application shutdown.
+2025-12-29 23:02:55 | INFO     | logging:callHandlers:1706 - Application shutdown complete.
+2025-12-29 23:02:55 | INFO     | logging:callHandlers:1706 - Finished server process [36]
+2025-12-29 23:02:57 | INFO     | logging:callHandlers:1706 - Started server process [37]
+2025-12-29 23:02:57 | INFO     | logging:callHandlers:1706 - Waiting for application startup.
+2025-12-29 23:02:57 | INFO     | logging:callHandlers:1706 - Application startup complete.
+2025-12-29 23:03:10 | INFO     | logging:callHandlers:1706 - Shutting down
+2025-12-29 23:03:11 | INFO     | logging:callHandlers:1706 - Waiting for application shutdown.
+2025-12-29 23:03:11 | INFO     | logging:callHandlers:1706 - Application shutdown complete.
+2025-12-29 23:03:11 | INFO     | logging:callHandlers:1706 - Finished server process [37]
+2025-12-29 23:03:13 | INFO     | logging:callHandlers:1706 - Started server process [50]
+2025-12-29 23:03:13 | INFO     | logging:callHandlers:1706 - Waiting for application startup.
+2025-12-29 23:03:13 | INFO     | logging:callHandlers:1706 - Application startup complete.
+2025-12-29 23:03:26 | INFO     | logging:callHandlers:1706 - select pg_catalog.version()
+2025-12-29 23:03:26 | INFO     | logging:callHandlers:1706 - [raw sql] ()
+2025-12-29 23:03:26 | INFO     | logging:callHandlers:1706 - select current_schema()
+2025-12-29 23:03:26 | INFO     | logging:callHandlers:1706 - [raw sql] ()
+2025-12-29 23:03:26 | INFO     | logging:callHandlers:1706 - show standard_conforming_strings
+2025-12-29 23:03:26 | INFO     | logging:callHandlers:1706 - [raw sql] ()
+2025-12-29 23:03:26 | INFO     | logging:callHandlers:1706 - BEGIN (implicit)
+2025-12-29 23:03:26 | INFO     | logging:callHandlers:1706 - SELECT users.user_id, users.username, users.email, users.hashed_password, users.full_name, users.is_active, users.is_superuser, users.created_at, users.updated_at 
+FROM users 
+WHERE users.username = $1::VARCHAR
+2025-12-29 23:03:26 | INFO     | logging:callHandlers:1706 - [generated in 0.00124s] ('admin',)
+2025-12-29 23:03:26 | INFO     | logging:callHandlers:1706 - ROLLBACK
+2025-12-29 23:03:26 | ERROR    | logging:callHandlers:1706 - Exception in ASGI application
+
+Traceback (most recent call last):
+
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 533, in _prepare_and_execute
+    prepared_stmt, attributes = await adapt_connection._prepare(
+                                      │                └ <function AsyncAdapt_asyncpg_connection._prepare at 0x7f20b536ee80>
+                                      └ <AdaptedConnection <asyncpg.connection.Connection object at 0x7f20b40863e0>>
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 784, in _prepare
+    prepared_stmt = await self._connection.prepare(
+                          │    └ <member '_connection' of 'AdaptedConnection' objects>
+                          └ <AdaptedConnection <asyncpg.connection.Connection object at 0x7f20b40863e0>>
+  File "/usr/local/lib/python3.11/site-packages/asyncpg/connection.py", line 636, in prepare
+    return await self._prepare(
+                 │    └ <function Connection._prepare at 0x7f20b5279f80>
+                 └ <asyncpg.connection.Connection object at 0x7f20b40863e0>
+  File "/usr/local/lib/python3.11/site-packages/asyncpg/connection.py", line 654, in _prepare
+    stmt = await self._get_statement(
+                 │    └ <function Connection._get_statement at 0x7f20b5279c60>
+                 └ <asyncpg.connection.Connection object at 0x7f20b40863e0>
+  File "/usr/local/lib/python3.11/site-packages/asyncpg/connection.py", line 433, in _get_statement
+    statement = await self._protocol.prepare(
+                      │    └ <member '_protocol' of 'Connection' objects>
+                      └ <asyncpg.connection.Connection object at 0x7f20b40863e0>
+  File "asyncpg/protocol/protocol.pyx", line 166, in prepare
+
+asyncpg.exceptions.UndefinedTableError: relation "users" does not exist
+
+
+The above exception was the direct cause of the following exception:
+
+
+Traceback (most recent call last):
+
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+    │    │       └ <function DefaultDialect.do_execute at 0x7f20b5840c20>
+    │    └ <sqlalchemy.dialects.postgresql.asyncpg.PGDialect_asyncpg object at 0x7f20b545d390>
+    └ <sqlalchemy.engine.base.Connection object at 0x7f20b4082090>
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+    │      │       │          └ ('admin',)
+    │      │       └ 'SELECT users.user_id, users.username, users.email, users.hashed_password, users.full_name, users.is_active, users.is_superus...
+    │      └ <function AsyncAdapt_asyncpg_cursor.execute at 0x7f20b536e200>
+    └ <sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_cursor object at 0x7f20b4009de0>
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 591, in execute
+    self._adapt_connection.await_(
+    │    └ <member '_adapt_connection' of 'AsyncAdapt_asyncpg_cursor' objects>
+    └ <sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_cursor object at 0x7f20b4009de0>
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 125, in await_only
+    return current.driver.switch(awaitable)  # type: ignore[no-any-return]
+           │                     └ <coroutine object AsyncAdapt_asyncpg_cursor._prepare_and_execute at 0x7f20b4015480>
+           └ <_AsyncIoGreenlet object at 0x7f20b4f8d400 (otid=0x7f20b60f22e0) dead>
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 185, in greenlet_spawn
+    value = await result
+                  └ <coroutine object AsyncAdapt_asyncpg_cursor._prepare_and_execute at 0x7f20b4015480>
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 569, in _prepare_and_execute
+    self._handle_exception(error)
+    │    └ <function AsyncAdapt_asyncpg_cursor._handle_exception at 0x7f20b536e020>
+    └ <sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_cursor object at 0x7f20b4009de0>
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 520, in _handle_exception
+    self._adapt_connection._handle_exception(error)
+    │    │                                   └ UndefinedTableError('relation "users" does not exist')
+    │    └ <member '_adapt_connection' of 'AsyncAdapt_asyncpg_cursor' objects>
+    └ <sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_cursor object at 0x7f20b4009de0>
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 808, in _handle_exception
+    raise translated_error from error
+          │                     └ UndefinedTableError('relation "users" does not exist')
+          └ ProgrammingError('<class \'asyncpg.exceptions.UndefinedTableError\'>: relation "users" does not exist')
+
+sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_dbapi.ProgrammingError: <class 'asyncpg.exceptions.UndefinedTableError'>: relation "users" does not exist
+
+
+The above exception was the direct cause of the following exception:
+
+
+Traceback (most recent call last):
+
+  File "<string>", line 1, in <module>
+  File "/usr/local/lib/python3.11/multiprocessing/spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+               │     │   └ 4
+               │     └ 10
+               └ <function _main at 0x7f20b883e160>
+  File "/usr/local/lib/python3.11/multiprocessing/spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+           │    │          └ 4
+           │    └ <function BaseProcess._bootstrap at 0x7f20b890f740>
+           └ <SpawnProcess name='SpawnProcess-5' parent=11 started>
+  File "/usr/local/lib/python3.11/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x7f20b890eca0>
+    └ <SpawnProcess name='SpawnProcess-5' parent=11 started>
+  File "/usr/local/lib/python3.11/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {'config': <uvicorn.config.Config object at 0x7f20b85f8ed0>, 'target': <bound method Server.run of <uvicorn.server.Server obj...
+    │    │        │    │        └ <SpawnProcess name='SpawnProcess-5' parent=11 started>
+    │    │        │    └ ()
+    │    │        └ <SpawnProcess name='SpawnProcess-5' parent=11 started>
+    │    └ <function subprocess_started at 0x7f20b77a7560>
+    └ <SpawnProcess name='SpawnProcess-5' parent=11 started>
+  File "/usr/local/lib/python3.11/site-packages/uvicorn/_subprocess.py", line 76, in subprocess_started
+    target(sockets=sockets)
+    │              └ [<socket.socket fd=3, family=2, type=1, proto=0, laddr=('0.0.0.0', 8000)>]
+    └ <bound method Server.run of <uvicorn.server.Server object at 0x7f20b7687c90>>
+  File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 61, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           │       │   │    │             └ [<socket.socket fd=3, family=2, type=1, proto=0, laddr=('0.0.0.0', 8000)>]
+           │       │   │    └ <function Server.serve at 0x7f20b77a6520>
+           │       │   └ <uvicorn.server.Server object at 0x7f20b7687c90>
+           │       └ <function run at 0x7f20b7b4de40>
+           └ <module 'asyncio' from '/usr/local/lib/python3.11/asyncio/__init__.py'>
+  File "/usr/local/lib/python3.11/asyncio/runners.py", line 190, in run
+    return runner.run(main)
+           │      │   └ <coroutine object Server.serve at 0x7f20b76658b0>
+           │      └ <function Runner.run at 0x7f20b7ba2e80>
+           └ <asyncio.runners.Runner object at 0x7f20b76c36d0>
+  File "/usr/local/lib/python3.11/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           │    │     │                  └ <Task pending name='Task-1' coro=<Server.serve() running at /usr/local/lib/python3.11/site-packages/uvicorn/server.py:81> wai...
+           │    │     └ <cyfunction Loop.run_until_complete at 0x7f20b76a9cc0>
+           │    └ <uvloop.Loop running=True closed=False debug=False>
+           └ <asyncio.runners.Runner object at 0x7f20b76c36d0>
+> File "/usr/local/lib/python3.11/site-packages/uvicorn/protocols/http/httptools_impl.py", line 426, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+                   └ <uvicorn.middleware.proxy_headers.ProxyHeadersMiddleware object at 0x7f20b4174e10>
+  File "/usr/local/lib/python3.11/site-packages/uvicorn/middleware/proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+                 │    │   │      │        └ <bound method RequestResponseCycle.send of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7f20b3ff3c...
+                 │    │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7f20b3f...
+                 │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+                 │    └ <fastapi.applications.FastAPI object at 0x7f20b413b890>
+                 └ <uvicorn.middleware.proxy_headers.ProxyHeadersMiddleware object at 0x7f20b4174e10>
+  File "/usr/local/lib/python3.11/site-packages/fastapi/applications.py", line 1106, in __call__
+    await super().__call__(scope, receive, send)
+                           │      │        └ <bound method RequestResponseCycle.send of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7f20b3ff3c...
+                           │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7f20b3f...
+                           └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+  File "/usr/local/lib/python3.11/site-packages/starlette/applications.py", line 122, in __call__
+    await self.middleware_stack(scope, receive, send)
+          │    │                │      │        └ <bound method RequestResponseCycle.send of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7f20b3ff3c...
+          │    │                │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7f20b3f...
+          │    │                └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <starlette.middleware.errors.ServerErrorMiddleware object at 0x7f20b4179dd0>
+          └ <fastapi.applications.FastAPI object at 0x7f20b413b890>
+  File "/usr/local/lib/python3.11/site-packages/starlette/middleware/errors.py", line 184, in __call__
+    raise exc
+  File "/usr/local/lib/python3.11/site-packages/starlette/middleware/errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+          │    │   │      │        └ <function ServerErrorMiddleware.__call__.<locals>._send at 0x7f20b418a980>
+          │    │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7f20b3f...
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x7f20b413be90>
+          └ <starlette.middleware.errors.ServerErrorMiddleware object at 0x7f20b4179dd0>
+  File "/usr/local/lib/python3.11/site-packages/starlette/middleware/exceptions.py", line 79, in __call__
+    raise exc
+  File "/usr/local/lib/python3.11/site-packages/starlette/middleware/exceptions.py", line 68, in __call__
+    await self.app(scope, receive, sender)
+          │    │   │      │        └ <function ExceptionMiddleware.__call__.<locals>.sender at 0x7f20b418a840>
+          │    │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7f20b3f...
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <fastapi.middleware.asyncexitstack.AsyncExitStackMiddleware object at 0x7f20b416be10>
+          └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x7f20b413be90>
+  File "/usr/local/lib/python3.11/site-packages/fastapi/middleware/asyncexitstack.py", line 20, in __call__
+    raise e
+  File "/usr/local/lib/python3.11/site-packages/fastapi/middleware/asyncexitstack.py", line 17, in __call__
+    await self.app(scope, receive, send)
+          │    │   │      │        └ <function ExceptionMiddleware.__call__.<locals>.sender at 0x7f20b418a840>
+          │    │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7f20b3f...
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <fastapi.routing.APIRouter object at 0x7f20b4f680d0>
+          └ <fastapi.middleware.asyncexitstack.AsyncExitStackMiddleware object at 0x7f20b416be10>
+  File "/usr/local/lib/python3.11/site-packages/starlette/routing.py", line 718, in __call__
+    await route.handle(scope, receive, send)
+          │     │      │      │        └ <function ExceptionMiddleware.__call__.<locals>.sender at 0x7f20b418a840>
+          │     │      │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7f20b3f...
+          │     │      └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │     └ <function Route.handle at 0x7f20b636bf60>
+          └ APIRoute(path='/api/v1/usuarios/register', name='register', methods=['POST'])
+  File "/usr/local/lib/python3.11/site-packages/starlette/routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+          │    │   │      │        └ <function ExceptionMiddleware.__call__.<locals>.sender at 0x7f20b418a840>
+          │    │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7f20b3f...
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <function request_response.<locals>.app at 0x7f20b4188720>
+          └ APIRoute(path='/api/v1/usuarios/register', name='register', methods=['POST'])
+  File "/usr/local/lib/python3.11/site-packages/starlette/routing.py", line 66, in app
+    response = await func(request)
+                     │    └ <starlette.requests.Request object at 0x7f20b4199d50>
+                     └ <function get_request_handler.<locals>.app at 0x7f20b4188680>
+  File "/usr/local/lib/python3.11/site-packages/fastapi/routing.py", line 274, in app
+    raw_response = await run_endpoint_function(
+                         └ <function run_endpoint_function at 0x7f20b636a340>
+  File "/usr/local/lib/python3.11/site-packages/fastapi/routing.py", line 191, in run_endpoint_function
+    return await dependant.call(**values)
+                 │         │      └ {'use_case': <src.modules.usuarios.application.features.register_user.use_case.RegisterUserUseCase object at 0x7f20b4179010>,...
+                 │         └ <function register at 0x7f20b4121760>
+                 └ <fastapi.dependencies.models.Dependant object at 0x7f20b41e2750>
+
+  File "/app/src/modules/usuarios/api/router.py", line 26, in register
+    user = await use_case.execute(command)
+                 │        │       └ RegisterUserCommand(username='admin', email='admin@example.com', password='securepassword123', full_name='Administrador')
+                 │        └ <function RegisterUserUseCase.execute at 0x7f20b4140d60>
+                 └ <src.modules.usuarios.application.features.register_user.use_case.RegisterUserUseCase object at 0x7f20b4179010>
+
+  File "/app/src/modules/usuarios/application/features/register_user/use_case.py", line 32, in execute
+    existing_user = await self.repository.get_by_username(command.username)
+                          │    │          │               │       └ 'admin'
+                          │    │          │               └ RegisterUserCommand(username='admin', email='admin@example.com', password='securepassword123', full_name='Administrador')
+                          │    │          └ <function SQLAlchemyUserRepository.get_by_username at 0x7f20b4171080>
+                          │    └ <src.modules.usuarios.infrastructure.repositories.SQLAlchemyUserRepository object at 0x7f20b41ab590>
+                          └ <src.modules.usuarios.application.features.register_user.use_case.RegisterUserUseCase object at 0x7f20b4179010>
+
+  File "/app/src/modules/usuarios/infrastructure/repositories.py", line 105, in get_by_username
+    result = await self.session.execute(stmt)
+                   │    │       │       └ <sqlalchemy.sql.selectable.Select object at 0x7f20b4fd2590>
+                   │    │       └ <function AsyncSession.execute at 0x7f20b5454fe0>
+                   │    └ <sqlalchemy.ext.asyncio.session.AsyncSession object at 0x7f20b4178950>
+                   └ <src.modules.usuarios.infrastructure.repositories.SQLAlchemyUserRepository object at 0x7f20b41ab590>
+
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/ext/asyncio/session.py", line 455, in execute
+    result = await greenlet_spawn(
+                   └ <function greenlet_spawn at 0x7f20b6314720>
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 190, in greenlet_spawn
+    result = context.throw(*sys.exc_info())
+             │       │      │   └ <built-in function exc_info>
+             │       │      └ <module 'sys' (built-in)>
+             │       └ <method 'throw' of 'greenlet.greenlet' objects>
+             └ <_AsyncIoGreenlet object at 0x7f20b4f8d400 (otid=0x7f20b60f22e0) dead>
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 2308, in execute
+    return self._execute_internal(
+           │    └ <function Session._execute_internal at 0x7f20b556d940>
+           └ <sqlalchemy.orm.session.Session object at 0x7f20b64e14d0>
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 2190, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                   │      │                 └ <classmethod(<function AbstractORMCompileState.orm_execute_statement at 0x7f20b55ff4c0>)>
+                   │      └ <class 'sqlalchemy.orm.context.ORMSelectCompileState'>
+                   └ typing.Any
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/context.py", line 293, in orm_execute_statement
+    result = conn.execute(
+             │    └ <function Connection.execute at 0x7f20b5989760>
+             └ <sqlalchemy.engine.base.Connection object at 0x7f20b4082090>
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+    return meth(
+           └ <bound method ClauseElement._execute_on_connection of <sqlalchemy.sql.selectable.Select object at 0x7f20b4fd2590>>
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/sql/elements.py", line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           │          └ <function Connection._execute_clauseelement at 0x7f20b5989a80>
+           └ <sqlalchemy.engine.base.Connection object at 0x7f20b4082090>
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1639, in _execute_clauseelement
+    ret = self._execute_context(
+          │    └ <function Connection._execute_context at 0x7f20b5989c60>
+          └ <sqlalchemy.engine.base.Connection object at 0x7f20b4082090>
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           │    └ <function Connection._exec_single_context at 0x7f20b5989d00>
+           └ <sqlalchemy.engine.base.Connection object at 0x7f20b4082090>
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+    │    └ <function Connection._handle_dbapi_exception at 0x7f20b5989f80>
+    └ <sqlalchemy.engine.base.Connection object at 0x7f20b4082090>
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2343, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+          │                    │              │                 └ ProgrammingError('<class \'asyncpg.exceptions.UndefinedTableError\'>: relation "users" does not exist')
+          │                    │              └ (<class 'sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_dbapi.ProgrammingError'>, ProgrammingError('<class \'async...
+          │                    └ <method 'with_traceback' of 'BaseException' objects>
+          └ ProgrammingError('(sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class \'asyncpg.exceptions.UndefinedTableError\'...
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+    │    │       └ <function DefaultDialect.do_execute at 0x7f20b5840c20>
+    │    └ <sqlalchemy.dialects.postgresql.asyncpg.PGDialect_asyncpg object at 0x7f20b545d390>
+    └ <sqlalchemy.engine.base.Connection object at 0x7f20b4082090>
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+    │      │       │          └ ('admin',)
+    │      │       └ 'SELECT users.user_id, users.username, users.email, users.hashed_password, users.full_name, users.is_active, users.is_superus...
+    │      └ <function AsyncAdapt_asyncpg_cursor.execute at 0x7f20b536e200>
+    └ <sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_cursor object at 0x7f20b4009de0>
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 591, in execute
+    self._adapt_connection.await_(
+    │    └ <member '_adapt_connection' of 'AsyncAdapt_asyncpg_cursor' objects>
+    └ <sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_cursor object at 0x7f20b4009de0>
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 125, in await_only
+    return current.driver.switch(awaitable)  # type: ignore[no-any-return]
+           │                     └ <coroutine object AsyncAdapt_asyncpg_cursor._prepare_and_execute at 0x7f20b4015480>
+           └ <_AsyncIoGreenlet object at 0x7f20b4f8d400 (otid=0x7f20b60f22e0) dead>
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 185, in greenlet_spawn
+    value = await result
+                  └ <coroutine object AsyncAdapt_asyncpg_cursor._prepare_and_execute at 0x7f20b4015480>
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 569, in _prepare_and_execute
+    self._handle_exception(error)
+    │    └ <function AsyncAdapt_asyncpg_cursor._handle_exception at 0x7f20b536e020>
+    └ <sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_cursor object at 0x7f20b4009de0>
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 520, in _handle_exception
+    self._adapt_connection._handle_exception(error)
+    │    │                                   └ UndefinedTableError('relation "users" does not exist')
+    │    └ <member '_adapt_connection' of 'AsyncAdapt_asyncpg_cursor' objects>
+    └ <sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_cursor object at 0x7f20b4009de0>
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 808, in _handle_exception
+    raise translated_error from error
+          │                     └ UndefinedTableError('relation "users" does not exist')
+          └ ProgrammingError('<class \'asyncpg.exceptions.UndefinedTableError\'>: relation "users" does not exist')
+
+sqlalchemy.exc.ProgrammingError: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedTableError'>: relation "users" does not exist
+[SQL: SELECT users.user_id, users.username, users.email, users.hashed_password, users.full_name, users.is_active, users.is_superuser, users.created_at, users.updated_at 
+FROM users 
+WHERE users.username = $1::VARCHAR]
+[parameters: ('admin',)]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-12-29 23:03:27 | INFO     | logging:callHandlers:1706 - Shutting down
+2025-12-29 23:03:27 | INFO     | logging:callHandlers:1706 - Waiting for application shutdown.
+2025-12-29 23:03:27 | INFO     | logging:callHandlers:1706 - Application shutdown complete.
+2025-12-29 23:03:27 | INFO     | logging:callHandlers:1706 - Finished server process [50]
+2025-12-29 23:03:29 | INFO     | logging:callHandlers:1706 - Started server process [96]
+2025-12-29 23:03:29 | INFO     | logging:callHandlers:1706 - Waiting for application startup.
+2025-12-29 23:03:29 | INFO     | logging:callHandlers:1706 - Application startup complete.
+2025-12-29 23:03:46 | INFO     | logging:callHandlers:1706 - Shutting down
+2025-12-29 23:03:47 | INFO     | logging:callHandlers:1706 - Waiting for application shutdown.
+2025-12-29 23:03:47 | INFO     | logging:callHandlers:1706 - Application shutdown complete.
+2025-12-29 23:03:47 | INFO     | logging:callHandlers:1706 - Finished server process [96]
+2025-12-29 23:03:49 | INFO     | logging:callHandlers:1706 - Started server process [108]
+2025-12-29 23:03:49 | INFO     | logging:callHandlers:1706 - Waiting for application startup.
+2025-12-29 23:03:49 | INFO     | logging:callHandlers:1706 - Application startup complete.
+2025-12-29 23:03:51 | INFO     | logging:callHandlers:1706 - Shutting down
+2025-12-29 23:03:52 | INFO     | logging:callHandlers:1706 - Waiting for application shutdown.
+2025-12-29 23:03:52 | INFO     | logging:callHandlers:1706 - Application shutdown complete.
+2025-12-29 23:03:52 | INFO     | logging:callHandlers:1706 - Finished server process [108]
+2025-12-29 23:03:54 | INFO     | logging:callHandlers:1706 - Started server process [115]
+2025-12-29 23:03:54 | INFO     | logging:callHandlers:1706 - Waiting for application startup.
+2025-12-29 23:03:54 | INFO     | logging:callHandlers:1706 - Application startup complete.
+2025-12-29 23:04:24 | INFO     | logging:callHandlers:1706 - Shutting down
+2025-12-29 23:04:24 | INFO     | logging:callHandlers:1706 - Waiting for application shutdown.
+2025-12-29 23:04:24 | INFO     | logging:callHandlers:1706 - Application shutdown complete.
+2025-12-29 23:04:24 | INFO     | logging:callHandlers:1706 - Finished server process [115]
+2025-12-29 23:04:26 | INFO     | logging:callHandlers:1706 - Started server process [172]
+2025-12-29 23:04:26 | INFO     | logging:callHandlers:1706 - Waiting for application startup.
+2025-12-29 23:04:26 | INFO     | logging:callHandlers:1706 - Application startup complete.
+2025-12-29 23:04:33 | INFO     | logging:callHandlers:1706 - select pg_catalog.version()
+2025-12-29 23:04:33 | INFO     | logging:callHandlers:1706 - [raw sql] ()
+2025-12-29 23:04:33 | INFO     | logging:callHandlers:1706 - select current_schema()
+2025-12-29 23:04:33 | INFO     | logging:callHandlers:1706 - [raw sql] ()
+2025-12-29 23:04:33 | INFO     | logging:callHandlers:1706 - show standard_conforming_strings
+2025-12-29 23:04:33 | INFO     | logging:callHandlers:1706 - [raw sql] ()
+2025-12-29 23:04:33 | INFO     | logging:callHandlers:1706 - BEGIN (implicit)
+2025-12-29 23:04:33 | INFO     | logging:callHandlers:1706 - SELECT users.user_id, users.username, users.email, users.hashed_password, users.full_name, users.is_active, users.is_superuser, users.created_at, users.updated_at 
+FROM users 
+WHERE users.username = $1::VARCHAR
+2025-12-29 23:04:33 | INFO     | logging:callHandlers:1706 - [generated in 0.00131s] ('admin',)
+2025-12-29 23:04:33 | INFO     | logging:callHandlers:1706 - SELECT users.user_id, users.username, users.email, users.hashed_password, users.full_name, users.is_active, users.is_superuser, users.created_at, users.updated_at 
+FROM users 
+WHERE users.email = $1::VARCHAR
+2025-12-29 23:04:33 | INFO     | logging:callHandlers:1706 - [generated in 0.00145s] ('admin@example.com',)
+2025-12-29 23:04:33 | INFO     | logging:callHandlers:1706 - ROLLBACK
+2025-12-29 23:04:33 | ERROR    | logging:callHandlers:1706 - Exception in ASGI application
+
+Traceback (most recent call last):
+
+  File "<string>", line 1, in <module>
+  File "/usr/local/lib/python3.11/multiprocessing/spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+               │     │   └ 4
+               │     └ 10
+               └ <function _main at 0x7f478fe72160>
+  File "/usr/local/lib/python3.11/multiprocessing/spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+           │    │          └ 4
+           │    └ <function BaseProcess._bootstrap at 0x7f478ff4f740>
+           └ <SpawnProcess name='SpawnProcess-9' parent=11 started>
+  File "/usr/local/lib/python3.11/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x7f478ff4eca0>
+    └ <SpawnProcess name='SpawnProcess-9' parent=11 started>
+  File "/usr/local/lib/python3.11/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {'config': <uvicorn.config.Config object at 0x7f478ef81050>, 'target': <bound method Server.run of <uvicorn.server.Server obj...
+    │    │        │    │        └ <SpawnProcess name='SpawnProcess-9' parent=11 started>
+    │    │        │    └ ()
+    │    │        └ <SpawnProcess name='SpawnProcess-9' parent=11 started>
+    │    └ <function subprocess_started at 0x7f478eddf560>
+    └ <SpawnProcess name='SpawnProcess-9' parent=11 started>
+  File "/usr/local/lib/python3.11/site-packages/uvicorn/_subprocess.py", line 76, in subprocess_started
+    target(sockets=sockets)
+    │              └ [<socket.socket fd=3, family=2, type=1, proto=0, laddr=('0.0.0.0', 8000)>]
+    └ <bound method Server.run of <uvicorn.server.Server object at 0x7f478ecbfa50>>
+  File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 61, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           │       │   │    │             └ [<socket.socket fd=3, family=2, type=1, proto=0, laddr=('0.0.0.0', 8000)>]
+           │       │   │    └ <function Server.serve at 0x7f478edde520>
+           │       │   └ <uvicorn.server.Server object at 0x7f478ecbfa50>
+           │       └ <function run at 0x7f478f17de40>
+           └ <module 'asyncio' from '/usr/local/lib/python3.11/asyncio/__init__.py'>
+  File "/usr/local/lib/python3.11/asyncio/runners.py", line 190, in run
+    return runner.run(main)
+           │      │   └ <coroutine object Server.serve at 0x7f478ec998b0>
+           │      └ <function Runner.run at 0x7f478f1d2e80>
+           └ <asyncio.runners.Runner object at 0x7f478ecfb8d0>
+  File "/usr/local/lib/python3.11/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           │    │     │                  └ <Task pending name='Task-1' coro=<Server.serve() running at /usr/local/lib/python3.11/site-packages/uvicorn/server.py:81> wai...
+           │    │     └ <cyfunction Loop.run_until_complete at 0x7f478ece1cc0>
+           │    └ <uvloop.Loop running=True closed=False debug=False>
+           └ <asyncio.runners.Runner object at 0x7f478ecfb8d0>
+> File "/usr/local/lib/python3.11/site-packages/uvicorn/protocols/http/httptools_impl.py", line 426, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+                   └ <uvicorn.middleware.proxy_headers.ProxyHeadersMiddleware object at 0x7f478ed14050>
+  File "/usr/local/lib/python3.11/site-packages/uvicorn/middleware/proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+                 │    │   │      │        └ <bound method RequestResponseCycle.send of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7f478b7a44...
+                 │    │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7f478b7...
+                 │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+                 │    └ <fastapi.applications.FastAPI object at 0x7f478b7a8910>
+                 └ <uvicorn.middleware.proxy_headers.ProxyHeadersMiddleware object at 0x7f478ed14050>
+  File "/usr/local/lib/python3.11/site-packages/fastapi/applications.py", line 1106, in __call__
+    await super().__call__(scope, receive, send)
+                           │      │        └ <bound method RequestResponseCycle.send of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7f478b7a44...
+                           │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7f478b7...
+                           └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+  File "/usr/local/lib/python3.11/site-packages/starlette/applications.py", line 122, in __call__
+    await self.middleware_stack(scope, receive, send)
+          │    │                │      │        └ <bound method RequestResponseCycle.send of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7f478b7a44...
+          │    │                │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7f478b7...
+          │    │                └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <starlette.middleware.errors.ServerErrorMiddleware object at 0x7f478b825ed0>
+          └ <fastapi.applications.FastAPI object at 0x7f478b7a8910>
+  File "/usr/local/lib/python3.11/site-packages/starlette/middleware/errors.py", line 184, in __call__
+    raise exc
+  File "/usr/local/lib/python3.11/site-packages/starlette/middleware/errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+          │    │   │      │        └ <function ServerErrorMiddleware.__call__.<locals>._send at 0x7f478b7ba980>
+          │    │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7f478b7...
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x7f478b8253d0>
+          └ <starlette.middleware.errors.ServerErrorMiddleware object at 0x7f478b825ed0>
+  File "/usr/local/lib/python3.11/site-packages/starlette/middleware/exceptions.py", line 79, in __call__
+    raise exc
+  File "/usr/local/lib/python3.11/site-packages/starlette/middleware/exceptions.py", line 68, in __call__
+    await self.app(scope, receive, sender)
+          │    │   │      │        └ <function ExceptionMiddleware.__call__.<locals>.sender at 0x7f478b7ba840>
+          │    │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7f478b7...
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <fastapi.middleware.asyncexitstack.AsyncExitStackMiddleware object at 0x7f478b825d50>
+          └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x7f478b8253d0>
+  File "/usr/local/lib/python3.11/site-packages/fastapi/middleware/asyncexitstack.py", line 20, in __call__
+    raise e
+  File "/usr/local/lib/python3.11/site-packages/fastapi/middleware/asyncexitstack.py", line 17, in __call__
+    await self.app(scope, receive, send)
+          │    │   │      │        └ <function ExceptionMiddleware.__call__.<locals>.sender at 0x7f478b7ba840>
+          │    │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7f478b7...
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <fastapi.routing.APIRouter object at 0x7f478d909ed0>
+          └ <fastapi.middleware.asyncexitstack.AsyncExitStackMiddleware object at 0x7f478b825d50>
+  File "/usr/local/lib/python3.11/site-packages/starlette/routing.py", line 718, in __call__
+    await route.handle(scope, receive, send)
+          │     │      │      │        └ <function ExceptionMiddleware.__call__.<locals>.sender at 0x7f478b7ba840>
+          │     │      │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7f478b7...
+          │     │      └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │     └ <function Route.handle at 0x7f478d9a3f60>
+          └ APIRoute(path='/api/v1/usuarios/register', name='register', methods=['POST'])
+  File "/usr/local/lib/python3.11/site-packages/starlette/routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+          │    │   │      │        └ <function ExceptionMiddleware.__call__.<locals>.sender at 0x7f478b7ba840>
+          │    │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7f478b7...
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <function request_response.<locals>.app at 0x7f478b7b8720>
+          └ APIRoute(path='/api/v1/usuarios/register', name='register', methods=['POST'])
+  File "/usr/local/lib/python3.11/site-packages/starlette/routing.py", line 66, in app
+    response = await func(request)
+                     │    └ <starlette.requests.Request object at 0x7f478b7aa090>
+                     └ <function get_request_handler.<locals>.app at 0x7f478b7b8680>
+  File "/usr/local/lib/python3.11/site-packages/fastapi/routing.py", line 274, in app
+    raw_response = await run_endpoint_function(
+                         └ <function run_endpoint_function at 0x7f478d9a2340>
+  File "/usr/local/lib/python3.11/site-packages/fastapi/routing.py", line 191, in run_endpoint_function
+    return await dependant.call(**values)
+                 │         │      └ {'use_case': <src.modules.usuarios.application.features.register_user.use_case.RegisterUserUseCase object at 0x7f478c826750>,...
+                 │         └ <function register at 0x7f478b751760>
+                 └ <fastapi.dependencies.models.Dependant object at 0x7f478b812ad0>
+
+  File "/app/src/modules/usuarios/api/router.py", line 26, in register
+    user = await use_case.execute(command)
+                 │        │       └ RegisterUserCommand(username='admin', email='admin@example.com', password='securepassword123', full_name='Administrador')
+                 │        └ <function RegisterUserUseCase.execute at 0x7f478b770d60>
+                 └ <src.modules.usuarios.application.features.register_user.use_case.RegisterUserUseCase object at 0x7f478c826750>
+
+  File "/app/src/modules/usuarios/application/features/register_user/use_case.py", line 42, in execute
+    hashed_password = AuthService.get_password_hash(command.password)
+                      │           │                 │       └ 'securepassword123'
+                      │           │                 └ RegisterUserCommand(username='admin', email='admin@example.com', password='securepassword123', full_name='Administrador')
+                      │           └ <classmethod(<function AuthService.get_password_hash at 0x7f478b7709a0>)>
+                      └ <class 'src.modules.usuarios.application.services.auth_service.AuthService'>
+
+  File "/app/src/modules/usuarios/application/services/auth_service.py", line 30, in get_password_hash
+    return cls.pwd_context.hash(password)
+           │   │           │    └ 'securepassword123'
+           │   │           └ <function CryptContext.hash at 0x7f478b750e00>
+           │   └ <CryptContext at 0x7f478c636490>
+           └ <class 'src.modules.usuarios.application.services.auth_service.AuthService'>
+
+  File "/usr/local/lib/python3.11/site-packages/passlib/context.py", line 2258, in hash
+    return record.hash(secret, **kwds)
+           │      │    │         └ {}
+           │      │    └ 'securepassword123'
+           │      └ <classmethod(<function GenericHandler.hash at 0x7f478b9467a0>)>
+           └ <class 'passlib.handlers.bcrypt.<customized bcrypt hasher>'>
+  File "/usr/local/lib/python3.11/site-packages/passlib/utils/handlers.py", line 779, in hash
+    self.checksum = self._calc_checksum(secret)
+    │    │          │    │              └ 'securepassword123'
+    │    │          │    └ <function _NoBackend._calc_checksum at 0x7f478b7537e0>
+    │    │          └ <passlib.handlers.bcrypt.<customized bcrypt hasher> object at 0x7f478b6d7910>
+    │    └ None
+    └ <passlib.handlers.bcrypt.<customized bcrypt hasher> object at 0x7f478b6d7910>
+  File "/usr/local/lib/python3.11/site-packages/passlib/handlers/bcrypt.py", line 591, in _calc_checksum
+    self._stub_requires_backend()
+    │    └ <classmethod(<function BackendMixin._stub_requires_backend at 0x7f478b72cb80>)>
+    └ <passlib.handlers.bcrypt.<customized bcrypt hasher> object at 0x7f478b6d7910>
+  File "/usr/local/lib/python3.11/site-packages/passlib/utils/handlers.py", line 2254, in _stub_requires_backend
+    cls.set_backend()
+    │   └ <classmethod(<function BackendMixin.set_backend at 0x7f478b72c900>)>
+    └ <class 'passlib.handlers.bcrypt.<customized bcrypt hasher>'>
+  File "/usr/local/lib/python3.11/site-packages/passlib/utils/handlers.py", line 2156, in set_backend
+    return owner.set_backend(name, dryrun=dryrun)
+           │     │           │            └ False
+           │     │           └ 'any'
+           │     └ <classmethod(<function BackendMixin.set_backend at 0x7f478b72c900>)>
+           └ <class 'passlib.handlers.bcrypt.bcrypt'>
+  File "/usr/local/lib/python3.11/site-packages/passlib/utils/handlers.py", line 2163, in set_backend
+    return cls.set_backend(name, dryrun=dryrun)
+           │   │           │            └ False
+           │   │           └ 'bcrypt'
+           │   └ <classmethod(<function BackendMixin.set_backend at 0x7f478b72c900>)>
+           └ <class 'passlib.handlers.bcrypt.bcrypt'>
+  File "/usr/local/lib/python3.11/site-packages/passlib/utils/handlers.py", line 2188, in set_backend
+    cls._set_backend(name, dryrun)
+    │   │            │     └ False
+    │   │            └ 'bcrypt'
+    │   └ <classmethod(<function SubclassBackendMixin._set_backend at 0x7f478b72ccc0>)>
+    └ <class 'passlib.handlers.bcrypt.bcrypt'>
+  File "/usr/local/lib/python3.11/site-packages/passlib/utils/handlers.py", line 2311, in _set_backend
+    super(SubclassBackendMixin, cls)._set_backend(name, dryrun)
+          │                     │                 │     └ False
+          │                     │                 └ 'bcrypt'
+          │                     └ <class 'passlib.handlers.bcrypt.bcrypt'>
+          └ <class 'passlib.utils.handlers.SubclassBackendMixin'>
+  File "/usr/local/lib/python3.11/site-packages/passlib/utils/handlers.py", line 2224, in _set_backend
+    ok = loader(**kwds)
+         │        └ {'name': 'bcrypt', 'dryrun': False}
+         └ <bound method _BcryptBackend._load_backend_mixin of <class 'passlib.handlers.bcrypt._BcryptBackend'>>
+  File "/usr/local/lib/python3.11/site-packages/passlib/handlers/bcrypt.py", line 626, in _load_backend_mixin
+    return mixin_cls._finalize_backend_mixin(name, dryrun)
+           │         │                       │     └ False
+           │         │                       └ 'bcrypt'
+           │         └ <classmethod(<function _BcryptCommon._finalize_backend_mixin at 0x7f478b753380>)>
+           └ <class 'passlib.handlers.bcrypt._BcryptBackend'>
+  File "/usr/local/lib/python3.11/site-packages/passlib/handlers/bcrypt.py", line 421, in _finalize_backend_mixin
+    if detect_wrap_bug(IDENT_2A):
+       │               └ '$2a$'
+       └ <function _BcryptCommon._finalize_backend_mixin.<locals>.detect_wrap_bug at 0x7f478b6ed9e0>
+  File "/usr/local/lib/python3.11/site-packages/passlib/handlers/bcrypt.py", line 380, in detect_wrap_bug
+    if verify(secret, bug_hash):
+       │      │       └ b'$2a$04$R1lJ2gkNaoPGdafE.H.16.nVyh2niHsGJhayOHLMiXlI45o8/DU.6'
+       │      └ b'012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012...
+       └ <bound method GenericHandler.verify of <class 'passlib.handlers.bcrypt._BcryptBackend'>>
+  File "/usr/local/lib/python3.11/site-packages/passlib/utils/handlers.py", line 792, in verify
+    return consteq(self._calc_checksum(secret), chk)
+           │       │    │              │        └ 'nVyh2niHsGJhayOHLMiXlI45o8/DU.6'
+           │       │    │              └ b'012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012...
+           │       │    └ <function _BcryptBackend._calc_checksum at 0x7f478b7539c0>
+           │       └ <passlib.handlers.bcrypt._BcryptBackend object at 0x7f478b7ca190>
+           └ <built-in function compare_digest>
+  File "/usr/local/lib/python3.11/site-packages/passlib/handlers/bcrypt.py", line 655, in _calc_checksum
+    hash = _bcrypt.hashpw(secret, config)
+           │       │      │       └ b'$2a$04$R1lJ2gkNaoPGdafE.H.16.'
+           │       │      └ b'012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012...
+           │       └ <built-in function hashpw>
+           └ <module 'bcrypt' from '/usr/local/lib/python3.11/site-packages/bcrypt/__init__.py'>
+
+ValueError: password cannot be longer than 72 bytes, truncate manually if necessary (e.g. my_password[:72])
+2025-12-29 23:06:23 | INFO     | logging:callHandlers:1706 - Started server process [13]
+2025-12-29 23:06:23 | INFO     | logging:callHandlers:1706 - Waiting for application startup.
+2025-12-29 23:06:23 | INFO     | logging:callHandlers:1706 - Application startup complete.
+2025-12-29 23:06:25 | INFO     | logging:callHandlers:1706 - select pg_catalog.version()
+2025-12-29 23:06:25 | INFO     | logging:callHandlers:1706 - [raw sql] ()
+2025-12-29 23:06:25 | INFO     | logging:callHandlers:1706 - select current_schema()
+2025-12-29 23:06:25 | INFO     | logging:callHandlers:1706 - [raw sql] ()
+2025-12-29 23:06:25 | INFO     | logging:callHandlers:1706 - show standard_conforming_strings
+2025-12-29 23:06:25 | INFO     | logging:callHandlers:1706 - [raw sql] ()
+2025-12-29 23:06:25 | INFO     | logging:callHandlers:1706 - BEGIN (implicit)
+2025-12-29 23:06:25 | INFO     | logging:callHandlers:1706 - SELECT users.user_id, users.username, users.email, users.hashed_password, users.full_name, users.is_active, users.is_superuser, users.created_at, users.updated_at 
+FROM users 
+WHERE users.username = $1::VARCHAR
+2025-12-29 23:06:25 | INFO     | logging:callHandlers:1706 - [generated in 0.00145s] ('admin',)
+2025-12-29 23:06:25 | INFO     | logging:callHandlers:1706 - SELECT users.user_id, users.username, users.email, users.hashed_password, users.full_name, users.is_active, users.is_superuser, users.created_at, users.updated_at 
+FROM users 
+WHERE users.email = $1::VARCHAR
+2025-12-29 23:06:25 | INFO     | logging:callHandlers:1706 - [generated in 0.00201s] ('admin@example.com',)
+2025-12-29 23:06:25 | INFO     | logging:callHandlers:1706 - INSERT INTO users (user_id, username, email, hashed_password, full_name, is_active, is_superuser, created_at, updated_at) VALUES ($1::UUID, $2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::BOOLEAN, $7::BOOLEAN, $8::TIMESTAMP WITHOUT TIME ZONE, $9::TIMESTAMP WITHOUT TIME ZONE)
+2025-12-29 23:06:25 | INFO     | logging:callHandlers:1706 - [generated in 0.00122s] (UUID('4f5f5083-feaf-434e-9e39-80cfaa3d6321'), 'admin', 'admin@example.com', '$2b$12$ru5d4gJ3WQMvBcDR62DzJeOjo2C155G6xrlABtvaIOVgQAd8zPNSi', 'Administrador', True, False, datetime.datetime(2025, 12, 29, 23, 6, 25, 769718), datetime.datetime(2025, 12, 29, 23, 6, 25, 769723))
+2025-12-29 23:06:25 | INFO     | logging:callHandlers:1706 - SELECT roles.role_id AS roles_role_id, roles.name AS roles_name, roles.description AS roles_description 
+FROM roles, user_roles 
+WHERE $1::UUID = user_roles.user_id AND roles.role_id = user_roles.role_id
+2025-12-29 23:06:25 | INFO     | logging:callHandlers:1706 - [generated in 0.00112s] (UUID('4f5f5083-feaf-434e-9e39-80cfaa3d6321'),)
+2025-12-29 23:06:25 | INFO     | logging:callHandlers:1706 - ROLLBACK
+2025-12-29 23:06:25 | ERROR    | logging:callHandlers:1706 - Exception in ASGI application
+
+Traceback (most recent call last):
+
+  File "<string>", line 1, in <module>
+  File "/usr/local/lib/python3.11/multiprocessing/spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+               │     │   └ 4
+               │     └ 7
+               └ <function _main at 0x7f7802f46160>
+  File "/usr/local/lib/python3.11/multiprocessing/spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+           │    │          └ 4
+           │    └ <function BaseProcess._bootstrap at 0x7f7803027740>
+           └ <SpawnProcess name='SpawnProcess-1' parent=11 started>
+  File "/usr/local/lib/python3.11/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x7f7803026ca0>
+    └ <SpawnProcess name='SpawnProcess-1' parent=11 started>
+  File "/usr/local/lib/python3.11/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {'config': <uvicorn.config.Config object at 0x7f7802ce4cd0>, 'target': <bound method Server.run of <uvicorn.server.Server obj...
+    │    │        │    │        └ <SpawnProcess name='SpawnProcess-1' parent=11 started>
+    │    │        │    └ ()
+    │    │        └ <SpawnProcess name='SpawnProcess-1' parent=11 started>
+    │    └ <function subprocess_started at 0x7f7801eab560>
+    └ <SpawnProcess name='SpawnProcess-1' parent=11 started>
+  File "/usr/local/lib/python3.11/site-packages/uvicorn/_subprocess.py", line 76, in subprocess_started
+    target(sockets=sockets)
+    │              └ [<socket.socket fd=3, family=2, type=1, proto=0, laddr=('0.0.0.0', 8000)>]
+    └ <bound method Server.run of <uvicorn.server.Server object at 0x7f7801d8bbd0>>
+  File "/usr/local/lib/python3.11/site-packages/uvicorn/server.py", line 61, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           │       │   │    │             └ [<socket.socket fd=3, family=2, type=1, proto=0, laddr=('0.0.0.0', 8000)>]
+           │       │   │    └ <function Server.serve at 0x7f7801eaa520>
+           │       │   └ <uvicorn.server.Server object at 0x7f7801d8bbd0>
+           │       └ <function run at 0x7f7802249e40>
+           └ <module 'asyncio' from '/usr/local/lib/python3.11/asyncio/__init__.py'>
+  File "/usr/local/lib/python3.11/asyncio/runners.py", line 190, in run
+    return runner.run(main)
+           │      │   └ <coroutine object Server.serve at 0x7f7801d698b0>
+           │      └ <function Runner.run at 0x7f780229ee80>
+           └ <asyncio.runners.Runner object at 0x7f7801dc7b50>
+  File "/usr/local/lib/python3.11/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           │    │     │                  └ <Task pending name='Task-1' coro=<Server.serve() running at /usr/local/lib/python3.11/site-packages/uvicorn/server.py:81> wai...
+           │    │     └ <cyfunction Loop.run_until_complete at 0x7f7801dadcc0>
+           │    └ <uvloop.Loop running=True closed=False debug=False>
+           └ <asyncio.runners.Runner object at 0x7f7801dc7b50>
+> File "/usr/local/lib/python3.11/site-packages/uvicorn/protocols/http/httptools_impl.py", line 426, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+                   └ <uvicorn.middleware.proxy_headers.ProxyHeadersMiddleware object at 0x7f7801de02d0>
+  File "/usr/local/lib/python3.11/site-packages/uvicorn/middleware/proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+                 │    │   │      │        └ <bound method RequestResponseCycle.send of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7f77fe6707...
+                 │    │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7f77fe6...
+                 │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+                 │    └ <fastapi.applications.FastAPI object at 0x7f77ff67b910>
+                 └ <uvicorn.middleware.proxy_headers.ProxyHeadersMiddleware object at 0x7f7801de02d0>
+  File "/usr/local/lib/python3.11/site-packages/fastapi/applications.py", line 1106, in __call__
+    await super().__call__(scope, receive, send)
+                           │      │        └ <bound method RequestResponseCycle.send of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7f77fe6707...
+                           │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7f77fe6...
+                           └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+  File "/usr/local/lib/python3.11/site-packages/starlette/applications.py", line 122, in __call__
+    await self.middleware_stack(scope, receive, send)
+          │    │                │      │        └ <bound method RequestResponseCycle.send of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7f77fe6707...
+          │    │                │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7f77fe6...
+          │    │                └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <starlette.middleware.errors.ServerErrorMiddleware object at 0x7f7801819090>
+          └ <fastapi.applications.FastAPI object at 0x7f77ff67b910>
+  File "/usr/local/lib/python3.11/site-packages/starlette/middleware/errors.py", line 184, in __call__
+    raise exc
+  File "/usr/local/lib/python3.11/site-packages/starlette/middleware/errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+          │    │   │      │        └ <function ServerErrorMiddleware.__call__.<locals>._send at 0x7f77fe696980>
+          │    │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7f77fe6...
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x7f77fe6be7d0>
+          └ <starlette.middleware.errors.ServerErrorMiddleware object at 0x7f7801819090>
+  File "/usr/local/lib/python3.11/site-packages/starlette/middleware/exceptions.py", line 79, in __call__
+    raise exc
+  File "/usr/local/lib/python3.11/site-packages/starlette/middleware/exceptions.py", line 68, in __call__
+    await self.app(scope, receive, sender)
+          │    │   │      │        └ <function ExceptionMiddleware.__call__.<locals>.sender at 0x7f77fe696de0>
+          │    │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7f77fe6...
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <fastapi.middleware.asyncexitstack.AsyncExitStackMiddleware object at 0x7f77fe665dd0>
+          └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x7f77fe6be7d0>
+  File "/usr/local/lib/python3.11/site-packages/fastapi/middleware/asyncexitstack.py", line 20, in __call__
+    raise e
+  File "/usr/local/lib/python3.11/site-packages/fastapi/middleware/asyncexitstack.py", line 17, in __call__
+    await self.app(scope, receive, send)
+          │    │   │      │        └ <function ExceptionMiddleware.__call__.<locals>.sender at 0x7f77fe696de0>
+          │    │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7f77fe6...
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <fastapi.routing.APIRouter object at 0x7f77fe678e50>
+          └ <fastapi.middleware.asyncexitstack.AsyncExitStackMiddleware object at 0x7f77fe665dd0>
+  File "/usr/local/lib/python3.11/site-packages/starlette/routing.py", line 718, in __call__
+    await route.handle(scope, receive, send)
+          │     │      │      │        └ <function ExceptionMiddleware.__call__.<locals>.sender at 0x7f77fe696de0>
+          │     │      │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7f77fe6...
+          │     │      └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │     └ <function Route.handle at 0x7f7800a7bf60>
+          └ APIRoute(path='/api/v1/usuarios/register', name='register', methods=['POST'])
+  File "/usr/local/lib/python3.11/site-packages/starlette/routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+          │    │   │      │        └ <function ExceptionMiddleware.__call__.<locals>.sender at 0x7f77fe696de0>
+          │    │   │      └ <bound method RequestResponseCycle.receive of <uvicorn.protocols.http.httptools_impl.RequestResponseCycle object at 0x7f77fe6...
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <function request_response.<locals>.app at 0x7f77fe695d00>
+          └ APIRoute(path='/api/v1/usuarios/register', name='register', methods=['POST'])
+  File "/usr/local/lib/python3.11/site-packages/starlette/routing.py", line 66, in app
+    response = await func(request)
+                     │    └ <starlette.requests.Request object at 0x7f77fe6f4990>
+                     └ <function get_request_handler.<locals>.app at 0x7f77fe695760>
+  File "/usr/local/lib/python3.11/site-packages/fastapi/routing.py", line 274, in app
+    raw_response = await run_endpoint_function(
+                         └ <function run_endpoint_function at 0x7f7800a7a340>
+  File "/usr/local/lib/python3.11/site-packages/fastapi/routing.py", line 191, in run_endpoint_function
+    return await dependant.call(**values)
+                 │         │      └ {'use_case': <src.modules.usuarios.application.features.register_user.use_case.RegisterUserUseCase object at 0x7f77fe67ed50>,...
+                 │         └ <function register at 0x7f77fe629da0>
+                 └ <fastapi.dependencies.models.Dependant object at 0x7f77fe6eaad0>
+
+  File "/app/src/modules/usuarios/api/router.py", line 26, in register
+    user = await use_case.execute(command)
+                 │        │       └ RegisterUserCommand(username='admin', email='admin@example.com', password='securepassword123', full_name='Administrador')
+                 │        └ <function RegisterUserUseCase.execute at 0x7f77fe645120>
+                 └ <src.modules.usuarios.application.features.register_user.use_case.RegisterUserUseCase object at 0x7f77fe67ed50>
+
+  File "/app/src/modules/usuarios/application/features/register_user/use_case.py", line 53, in execute
+    return await self.repository.save(user)
+                 │    │          │    └ User(username='admin', email='admin@example.com', hashed_password='$2b$12$ru5d4gJ3WQMvBcDR62DzJeOjo2C155G6xrlABtvaIOVgQAd8zPN...
+                 │    │          └ <function SQLAlchemyUserRepository.save at 0x7f77fe675260>
+                 │    └ <src.modules.usuarios.infrastructure.repositories.SQLAlchemyUserRepository object at 0x7f77fe6f4450>
+                 └ <src.modules.usuarios.application.features.register_user.use_case.RegisterUserUseCase object at 0x7f77fe67ed50>
+
+  File "/app/src/modules/usuarios/infrastructure/repositories.py", line 69, in save
+    return self._to_domain(model)
+           │    │          └ <UserModel(username='admin', email='admin@example.com')>
+           │    └ <function SQLAlchemyUserRepository._to_domain at 0x7f77fe646520>
+           └ <src.modules.usuarios.infrastructure.repositories.SQLAlchemyUserRepository object at 0x7f77fe6f4450>
+
+  File "/app/src/modules/usuarios/infrastructure/repositories.py", line 26, in _to_domain
+    for role_model in model.roles:
+                      │     └ <sqlalchemy.orm.attributes.InstrumentedAttribute object at 0x7f77fe674ae0>
+                      └ <UserModel(username='admin', email='admin@example.com')>
+
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/attributes.py", line 566, in __get__
+    return self.impl.get(state, dict_)  # type: ignore[no-any-return]
+           │    │        │      └ {'_sa_instance_state': <sqlalchemy.orm.state.InstanceState object at 0x7f77fe517fb0>, 'user_id': UUID('4f5f5083-feaf-434e-9e3...
+           │    │        └ <sqlalchemy.orm.state.InstanceState object at 0x7f77fe517fb0>
+           │    └ <member 'impl' of 'QueryableAttribute' objects>
+           └ <sqlalchemy.orm.attributes.InstrumentedAttribute object at 0x7f77fe674ae0>
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/attributes.py", line 1086, in get
+    value = self._fire_loader_callables(state, key, passive)
+            │    │                      │      │    └ symbol('PASSIVE_OFF')
+            │    │                      │      └ 'roles'
+            │    │                      └ <sqlalchemy.orm.state.InstanceState object at 0x7f77fe517fb0>
+            │    └ <function AttributeImpl._fire_loader_callables at 0x7f77ffe8dbc0>
+            └ <sqlalchemy.orm.attributes.CollectionAttributeImpl object at 0x7f77fe7ee610>
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/attributes.py", line 1121, in _fire_loader_callables
+    return self.callable_(state, passive)
+           │    │         │      └ symbol('PASSIVE_OFF')
+           │    │         └ <sqlalchemy.orm.state.InstanceState object at 0x7f77fe517fb0>
+           │    └ <member 'callable_' of 'AttributeImpl' objects>
+           └ <sqlalchemy.orm.attributes.CollectionAttributeImpl object at 0x7f77fe7ee610>
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/strategies.py", line 967, in _load_for_state
+    return self._emit_lazyload(
+           │    └ <function LazyLoader._emit_lazyload at 0x7f77ffacfce0>
+           └ <sqlalchemy.orm.strategies.LazyLoader object at 0x7f77fe56dfc0>
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/strategies.py", line 1130, in _emit_lazyload
+    result = session.execute(
+             │       └ <function Session.execute at 0x7f77ffc7dc60>
+             └ <sqlalchemy.orm.session.Session object at 0x7f77ff70ccd0>
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 2308, in execute
+    return self._execute_internal(
+           │    └ <function Session._execute_internal at 0x7f77ffc7d940>
+           └ <sqlalchemy.orm.session.Session object at 0x7f77ff70ccd0>
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 2190, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                   │      │                 └ <classmethod(<function AbstractORMCompileState.orm_execute_statement at 0x7f77ffd0f4c0>)>
+                   │      └ <class 'sqlalchemy.orm.context.ORMSelectCompileState'>
+                   └ typing.Any
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/orm/context.py", line 293, in orm_execute_statement
+    result = conn.execute(
+             │    └ <function Connection.execute at 0x7f7800099760>
+             └ <sqlalchemy.engine.base.Connection object at 0x7f77fe67f090>
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+    return meth(
+           └ <bound method ClauseElement._execute_on_connection of <sqlalchemy.sql.selectable.Select object at 0x7f77fe5c8450>>
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/sql/elements.py", line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           │          └ <function Connection._execute_clauseelement at 0x7f7800099a80>
+           └ <sqlalchemy.engine.base.Connection object at 0x7f77fe67f090>
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1639, in _execute_clauseelement
+    ret = self._execute_context(
+          │    └ <function Connection._execute_context at 0x7f7800099c60>
+          └ <sqlalchemy.engine.base.Connection object at 0x7f77fe67f090>
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           │    └ <function Connection._exec_single_context at 0x7f7800099d00>
+           └ <sqlalchemy.engine.base.Connection object at 0x7f77fe67f090>
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+    │    └ <function Connection._handle_dbapi_exception at 0x7f7800099f80>
+    └ <sqlalchemy.engine.base.Connection object at 0x7f77fe67f090>
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2346, in _handle_dbapi_exception
+    raise exc_info[1].with_traceback(exc_info[2])
+          │                          └ (<class 'sqlalchemy.exc.MissingGreenlet'>, MissingGreenlet("greenlet_spawn has not been called; can't call await_only() here....
+          └ (<class 'sqlalchemy.exc.MissingGreenlet'>, MissingGreenlet("greenlet_spawn has not been called; can't call await_only() here....
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+    │    │       └ <function DefaultDialect.do_execute at 0x7f77fff50c20>
+    │    └ <sqlalchemy.dialects.postgresql.asyncpg.PGDialect_asyncpg object at 0x7f780097c910>
+    └ <sqlalchemy.engine.base.Connection object at 0x7f77fe67f090>
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+    │      │       │          └ (UUID('4f5f5083-feaf-434e-9e39-80cfaa3d6321'),)
+    │      │       └ 'SELECT roles.role_id AS roles_role_id, roles.name AS roles_name, roles.description AS roles_description \nFROM roles, user_r...
+    │      └ <function AsyncAdapt_asyncpg_cursor.execute at 0x7f77ffa7e200>
+    └ <sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_cursor object at 0x7f77fe663e20>
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 591, in execute
+    self._adapt_connection.await_(
+    │    └ <member '_adapt_connection' of 'AsyncAdapt_asyncpg_cursor' objects>
+    └ <sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_cursor object at 0x7f77fe663e20>
+  File "/usr/local/lib/python3.11/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 116, in await_only
+    raise exc.MissingGreenlet(
+          │   └ <class 'sqlalchemy.exc.MissingGreenlet'>
+          └ <module 'sqlalchemy.exc' from '/usr/local/lib/python3.11/site-packages/sqlalchemy/exc.py'>
+
+sqlalchemy.exc.MissingGreenlet: greenlet_spawn has not been called; can't call await_only() here. Was IO attempted in an unexpected place? (Background on this error at: https://sqlalche.me/e/20/xd2s)
+2025-12-29 23:06:49 | INFO     | logging:callHandlers:1706 - Shutting down
+2025-12-29 23:06:49 | INFO     | logging:callHandlers:1706 - Waiting for application shutdown.
+2025-12-29 23:06:49 | INFO     | logging:callHandlers:1706 - Application shutdown complete.
+2025-12-29 23:06:49 | INFO     | logging:callHandlers:1706 - Finished server process [13]
+2025-12-29 23:07:02 | INFO     | logging:callHandlers:1706 - Started server process [65]
+2025-12-29 23:07:02 | INFO     | logging:callHandlers:1706 - Waiting for application startup.
+2025-12-29 23:07:02 | INFO     | logging:callHandlers:1706 - Application startup complete.
+2025-12-29 23:07:06 | INFO     | logging:callHandlers:1706 - select pg_catalog.version()
+2025-12-29 23:07:06 | INFO     | logging:callHandlers:1706 - [raw sql] ()
+2025-12-29 23:07:06 | INFO     | logging:callHandlers:1706 - select current_schema()
+2025-12-29 23:07:06 | INFO     | logging:callHandlers:1706 - [raw sql] ()
+2025-12-29 23:07:06 | INFO     | logging:callHandlers:1706 - show standard_conforming_strings
+2025-12-29 23:07:06 | INFO     | logging:callHandlers:1706 - [raw sql] ()
+2025-12-29 23:07:06 | INFO     | logging:callHandlers:1706 - BEGIN (implicit)
+2025-12-29 23:07:06 | INFO     | logging:callHandlers:1706 - SELECT users.user_id, users.username, users.email, users.hashed_password, users.full_name, users.is_active, users.is_superuser, users.created_at, users.updated_at 
+FROM users 
+WHERE users.username = $1::VARCHAR
+2025-12-29 23:07:06 | INFO     | logging:callHandlers:1706 - [generated in 0.00166s] ('admin',)
+2025-12-29 23:07:06 | INFO     | logging:callHandlers:1706 - SELECT users.user_id, users.username, users.email, users.hashed_password, users.full_name, users.is_active, users.is_superuser, users.created_at, users.updated_at 
+FROM users 
+WHERE users.email = $1::VARCHAR
+2025-12-29 23:07:06 | INFO     | logging:callHandlers:1706 - [generated in 0.00149s] ('admin@example.com',)
+2025-12-29 23:07:06 | INFO     | logging:callHandlers:1706 - INSERT INTO users (user_id, username, email, hashed_password, full_name, is_active, is_superuser, created_at, updated_at) VALUES ($1::UUID, $2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::BOOLEAN, $7::BOOLEAN, $8::TIMESTAMP WITHOUT TIME ZONE, $9::TIMESTAMP WITHOUT TIME ZONE)
+2025-12-29 23:07:06 | INFO     | logging:callHandlers:1706 - [generated in 0.00199s] (UUID('0ec08836-5add-4313-8a93-781c8a6b8be0'), 'admin', 'admin@example.com', '$2b$12$KFhukoFPhK2aO.CYRNGgXOE43DRIYKDyt.hzgwFstgM3jYf9rJlWW', 'Administrador', True, False, datetime.datetime(2025, 12, 29, 23, 7, 6, 518041), datetime.datetime(2025, 12, 29, 23, 7, 6, 518047))
+2025-12-29 23:07:06 | INFO     | logging:callHandlers:1706 - SELECT users.user_id, users.username, users.email, users.hashed_password, users.full_name, users.is_active, users.is_superuser, users.created_at, users.updated_at 
+FROM users 
+WHERE users.user_id = $1::UUID
+2025-12-29 23:07:06 | INFO     | logging:callHandlers:1706 - [generated in 0.00675s] (UUID('0ec08836-5add-4313-8a93-781c8a6b8be0'),)
+2025-12-29 23:07:06 | INFO     | logging:callHandlers:1706 - COMMIT
+2025-12-29 23:07:17 | INFO     | logging:callHandlers:1706 - BEGIN (implicit)
+2025-12-29 23:07:17 | INFO     | logging:callHandlers:1706 - SELECT users.user_id, users.username, users.email, users.hashed_password, users.full_name, users.is_active, users.is_superuser, users.created_at, users.updated_at 
+FROM users 
+WHERE users.username = $1::VARCHAR
+2025-12-29 23:07:17 | INFO     | logging:callHandlers:1706 - [cached since 10.91s ago] ('admin',)
+2025-12-29 23:07:17 | INFO     | logging:callHandlers:1706 - SELECT users_1.user_id AS users_1_user_id, roles.role_id AS roles_role_id, roles.name AS roles_name, roles.description AS roles_description 
+FROM users AS users_1 JOIN user_roles AS user_roles_1 ON users_1.user_id = user_roles_1.user_id JOIN roles ON roles.role_id = user_roles_1.role_id 
+WHERE users_1.user_id IN ($1::UUID)
+2025-12-29 23:07:17 | INFO     | logging:callHandlers:1706 - [generated in 0.00174s] (UUID('0ec08836-5add-4313-8a93-781c8a6b8be0'),)
+2025-12-29 23:07:17 | INFO     | logging:callHandlers:1706 - COMMIT
+2025-12-29 23:07:18 | INFO     | logging:callHandlers:1706 - BEGIN (implicit)
+2025-12-29 23:07:18 | INFO     | logging:callHandlers:1706 - SELECT users.user_id, users.username, users.email, users.hashed_password, users.full_name, users.is_active, users.is_superuser, users.created_at, users.updated_at 
+FROM users 
+WHERE users.username = $1::VARCHAR
+2025-12-29 23:07:18 | INFO     | logging:callHandlers:1706 - [cached since 12s ago] ('admin',)
+2025-12-29 23:07:18 | INFO     | logging:callHandlers:1706 - SELECT users_1.user_id AS users_1_user_id, roles.role_id AS roles_role_id, roles.name AS roles_name, roles.description AS roles_description 
+FROM users AS users_1 JOIN user_roles AS user_roles_1 ON users_1.user_id = user_roles_1.user_id JOIN roles ON roles.role_id = user_roles_1.role_id 
+WHERE users_1.user_id IN ($1::UUID)
+2025-12-29 23:07:18 | INFO     | logging:callHandlers:1706 - [cached since 1.078s ago] (UUID('0ec08836-5add-4313-8a93-781c8a6b8be0'),)
+2025-12-29 23:07:18 | INFO     | logging:callHandlers:1706 - COMMIT
+2025-12-29 23:07:18 | INFO     | logging:callHandlers:1706 - BEGIN (implicit)
+2025-12-29 23:07:18 | INFO     | logging:callHandlers:1706 - SELECT users.user_id, users.username, users.email, users.hashed_password, users.full_name, users.is_active, users.is_superuser, users.created_at, users.updated_at 
+FROM users 
+WHERE users.username = $1::VARCHAR
+2025-12-29 23:07:18 | INFO     | logging:callHandlers:1706 - [cached since 12.58s ago] ('admin',)
+2025-12-29 23:07:18 | INFO     | logging:callHandlers:1706 - SELECT users_1.user_id AS users_1_user_id, roles.role_id AS roles_role_id, roles.name AS roles_name, roles.description AS roles_description 
+FROM users AS users_1 JOIN user_roles AS user_roles_1 ON users_1.user_id = user_roles_1.user_id JOIN roles ON roles.role_id = user_roles_1.role_id 
+WHERE users_1.user_id IN ($1::UUID)
+2025-12-29 23:07:18 | INFO     | logging:callHandlers:1706 - [cached since 1.658s ago] (UUID('0ec08836-5add-4313-8a93-781c8a6b8be0'),)
+2025-12-29 23:07:18 | INFO     | logging:callHandlers:1706 - COMMIT

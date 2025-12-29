@@ -3,12 +3,13 @@ Entidades del dominio de Pedidos.
 """
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import List
+from typing import List, Any
 from uuid import UUID, uuid4
 
 from src.modules.pedidos.domain.value_objects import (
     OrderStatus, Quantity, Address, CustomerInfo
 )
+from src.modules.pedidos.domain.events import OrderCreatedEvent
 from src.core.exceptions import BusinessRuleViolation
 
 
@@ -64,6 +65,9 @@ class Order:
     confirmed_at: datetime = field(default=None)
     cancelled_at: datetime = field(default=None)
     
+    # Eventos de dominio (no se persisten en DB directamente)
+    domain_events: List[Any] = field(default_factory=list, repr=False)
+    
     def __post_init__(self):
         """Validaciones de la entidad."""
         if not self.items:
@@ -78,6 +82,17 @@ class Order:
         # Calcular total automáticamente
         if self.total_amount == 0.0:
             self.total_amount = self.calculate_total()
+            
+        # Al crear una entidad nueva, registramos el evento
+        # (Aquí simplificamos disparándolo en el post_init, aunque lo ideal es en el Use Case o Factory)
+        self.domain_events.append(
+            OrderCreatedEvent(
+                order_id=self.order_id,
+                customer_id=self.customer_info.customer_id,
+                total_amount=self.total_amount,
+                items_count=self.get_item_count()
+            )
+        )
     
     # Métodos de negocio
     

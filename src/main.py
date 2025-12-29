@@ -8,11 +8,16 @@ from src.core.exception_handlers import register_exception_handlers
 from src.core.logging import setup_logging
 from src.modules.catalogo.api.router import router as catalogo_router
 from src.modules.pedidos.api.router import router as pedidos_router
+from src.modules.usuarios.api.router import router as usuarios_router
 
 
 def create_app() -> FastAPI:
     """Factory para crear la aplicación FastAPI."""
     setup_logging()
+    
+    # Registrar handlers de eventos de dominio
+    from src.modules.pedidos.application.events.handlers import register_order_handlers
+    register_order_handlers()
     
     app = FastAPI(
         title=settings.app_name,
@@ -36,6 +41,13 @@ def create_app() -> FastAPI:
         pedidos_router,
         prefix=f"{settings.api_v1_prefix}/pedidos",
         tags=["Pedidos"]
+    )
+
+    # Montar router del módulo Usuarios
+    app.include_router(
+        usuarios_router,
+        prefix=f"{settings.api_v1_prefix}/usuarios",
+        tags=["Usuarios"]
     )
     
     @app.get("/")

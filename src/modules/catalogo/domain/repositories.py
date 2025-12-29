@@ -56,8 +56,15 @@ class ProductRepository(ABC):
         pass
 
     @abstractmethod
-    async def exists_by_sku(self, sku: SKU) -> bool:
+    async def search(
+        self,
+        query: Optional[str] = None,
+        min_price: Optional[float] = None,
+        max_price: Optional[float] = None,
+        skip: int = 0,
+        limit: int = 20
+    ) -> List[Product]:
         """
-        Verifica si existe un producto con el SKU dado.
+        Búsqueda avanzada con filtros dinámicos y búsqueda de texto.
         """
         pass

@@ -29,6 +29,22 @@ AsyncSessionLocal = async_sessionmaker(
 )
 
 
+from datetime import datetime
+from sqlalchemy import Column, DateTime
+
+
+class SoftDeleteMixin:
+    """Mixin para agregar funcionalidad de borrado lógico."""
+    deleted_at = Column(DateTime, nullable=True)
+
+    @property
+    def is_deleted(self) -> bool:
+        return self.deleted_at is not None
+
+    def soft_delete(self):
+        self.deleted_at = datetime.utcnow()
+
+
 class Base(DeclarativeBase):
     """Clase base para todos los modelos SQLAlchemy."""
     pass

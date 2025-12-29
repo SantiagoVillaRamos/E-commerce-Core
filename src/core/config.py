@@ -24,6 +24,11 @@ class Settings(BaseSettings):
     # DATABASE_URL can still be provided directly to override everything
     database_url: str = Field(default_factory=lambda: os.getenv("DATABASE_URL", ""))
     
+    # Security
+    secret_key: str = Field(default_factory=lambda: os.getenv("SECRET_KEY", "your-super-secret-key-for-dev-only"))
+    algorithm: str = "HS256"
+    access_token_expire_minutes: int = 30
+    
     # Application
     app_name: str = Field(default_factory=lambda: os.getenv("APP_NAME", "E-commerce Core"))
     debug: bool = Field(default_factory=lambda: os.getenv("DEBUG", "True").lower() == "true")

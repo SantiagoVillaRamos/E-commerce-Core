@@ -6,10 +6,10 @@ from sqlalchemy import Column, String, Float, Integer, Boolean, DateTime, Uuid
 from datetime import datetime
 import uuid
 
-from src.core.database import Base
+from src.core.database import Base, SoftDeleteMixin
 
 
-class ProductModel(Base):
+class ProductModel(Base, SoftDeleteMixin):
     """
     Modelo de base de datos para Product.
     Mapea la entidad de dominio a la tabla de PostgreSQL.

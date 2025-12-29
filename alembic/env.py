@@ -14,9 +14,9 @@ from alembic import context
 from src.core.database import Base
 from src.core.config import settings
 
-# Import all models to ensure they're registered with Base.metadata
 from src.modules.catalogo.infrastructure.models import ProductModel
 from src.modules.pedidos.infrastructure.models import OrderModel, OrderItemModel
+from src.modules.usuarios.infrastructure.models import UserModel, RoleModel, PermissionModel
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
