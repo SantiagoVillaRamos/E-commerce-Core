@@ -13,12 +13,13 @@ from src.core.database import Base
 
 class OrderStatusEnum(str, enum.Enum):
     """Enum para el estado de la orden (para SQLAlchemy)."""
-    PENDING = "pending"
-    CONFIRMED = "confirmed"
-    PROCESSING = "processing"
-    SHIPPED = "shipped"
-    DELIVERED = "delivered"
-    CANCELLED = "cancelled"
+    pending = "pending"
+    confirmed = "confirmed"
+    processing = "processing"
+    shipped = "shipped"
+    delivered = "delivered"
+    cancelled = "cancelled"
+
 
 
 class OrderModel(Base):
@@ -44,7 +45,7 @@ class OrderModel(Base):
     shipping_country = Column(String(100), nullable=False, default="Colombia")
     
     # Estado y totales
-    status = Column(SQLEnum(OrderStatusEnum), nullable=False, default=OrderStatusEnum.PENDING)
+    status = Column(SQLEnum(OrderStatusEnum), nullable=False, default=OrderStatusEnum.pending)
     total_amount = Column(Float, nullable=False)
     
     # Control de concurrencia optimista

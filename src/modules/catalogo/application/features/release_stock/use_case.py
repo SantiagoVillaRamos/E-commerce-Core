@@ -5,7 +5,6 @@ devolver el stock que había sido reservado.
 """
 from typing import List
 
-from src.modules.catalogo.application.interfaces import IReleaseStockUseCase
 from src.modules.catalogo.application.features.release_stock.command import ReleaseStockCommand
 from src.modules.catalogo.application.features.release_stock.response import (
     ReleaseStockResponse, ProductStockInfo
@@ -14,7 +13,7 @@ from src.modules.catalogo.domain.repositories import ProductRepository
 from src.core.exceptions import NotFoundError
 
 
-class ReleaseStockUseCase(IReleaseStockUseCase):
+class ReleaseStockUseCase:
     """
     Caso de Uso: Liberar stock de múltiples productos.
     

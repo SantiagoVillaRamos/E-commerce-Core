@@ -1,0 +1,42 @@
+services:
+  # Base de datos PostgreSQL
+  db:
+    image: postgres:15-alpine
+    container_name: ecommerce-db
+    environment:
+      POSTGRES_USER: ecommerce
+      POSTGRES_PASSWORD: ecommerce123
+      POSTGRES_DB: ecommerce
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ecommerce" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Aplicación FastAPI
+  app:
+    build: .
+    container_name: ecommerce-app
+    command: sh -c " echo 'Esperando a PostgreSQL...' && while ! nc -z db 5432; do sleep 1; done && echo 'PostgreSQL está listo!' && echo 'Aplicando migraciones...' && alembic upgrade head && echo 'Iniciando aplicación...' && uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload "
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://ecommerce:ecommerce123@db:5432/ecommerce
+      DEBUG: "true"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - .:/app
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/api/v1/catalogo/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:

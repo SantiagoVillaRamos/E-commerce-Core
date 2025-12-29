@@ -135,9 +135,14 @@ class SQLAlchemyOrderRepository(OrderRepository):
         model.updated_at = order.updated_at
         model.confirmed_at = order.confirmed_at
         
+        # Incrementar versión para concurrencia optimista
+        model.version = model.version + 1
+
+        
         await self.session.flush()
         await self.session.refresh(model, ["items"])
         return self._to_domain(model)
+
     
     async def get_by_id(self, order_id: UUID) -> Optional[Order]:
         """Busca una orden por su ID."""

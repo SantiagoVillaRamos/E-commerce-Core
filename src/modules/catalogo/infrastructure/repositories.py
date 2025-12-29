@@ -40,7 +40,9 @@ class SQLAlchemyProductRepository(ProductRepository):
         return ProductMapper.to_domain(model)
     
     async def update(self, product: Product) -> Product:
-        """Actualiza un producto existente."""
+        """
+        Actualiza un producto existente con control de concurrencia optimista.
+        """
         # Buscar el modelo existente
         stmt = select(ProductModel).where(ProductModel.product_id == product.product_id)
         result = await self.session.execute(stmt)
@@ -49,12 +51,16 @@ class SQLAlchemyProductRepository(ProductRepository):
         if not model:
             raise ValueError(f"Producto con ID {product.product_id} no encontrado")
         
+        # Incrementar versión para concurrencia optimista
+        model.version = model.version + 1
+        
         # Actualizar campos usando el mapper
         ProductMapper.update_model(model, product)
         
         await self.session.flush()
         await self.session.refresh(model)
         return ProductMapper.to_domain(model)
+
     
     async def get_by_id(self, product_id: UUID) -> Optional[Product]:
         """Busca un producto por su ID."""

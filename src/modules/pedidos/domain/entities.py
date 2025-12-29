@@ -24,8 +24,9 @@ class OrderItem:
     unit_price: float  # Precio unitario al momento de la orden
     
     def __post_init__(self):
-        if self.unit_price <= 0:
-            raise BusinessRuleViolation("El precio unitario debe ser mayor que 0")
+        if self.unit_price < 0:
+            raise BusinessRuleViolation("El precio unitario no puede sea negativo")
+
     
     def calculate_subtotal(self) -> float:
         """Calcula el subtotal del item (cantidad * precio unitario)."""

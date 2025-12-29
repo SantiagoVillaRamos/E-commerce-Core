@@ -94,29 +94,4 @@ class CatalogoFacade:
             BusinessRuleViolation: Si no hay stock suficiente
         """
         return await self._reserve_stock.execute(command)
-    
-    # ==================== Operaciones Compuestas (Futuro) ====================
-    
-    async def create_product_with_validation(
-        self, 
-        command: CreateProductCommand,
-        validate_supplier: bool = False
-    ) -> CreateProductResponse:
-        """
-        Ejemplo de operación compuesta que la facade puede orquestar.
-        
-        En el futuro, podría:
-        1. Validar con módulo de proveedores
-        2. Crear el producto
-        3. Notificar a otros módulos
-        
-        Args:
-            command: Datos del producto a crear
-            validate_supplier: Si debe validar con módulo de proveedores
-            
-        Returns:
-            Respuesta con los datos del producto creado
-        """
-        # Por ahora, solo delega al caso de uso simple
-        # En el futuro, aquí se puede agregar lógica de orquestación
-        return await self._create_product.execute(command)
+

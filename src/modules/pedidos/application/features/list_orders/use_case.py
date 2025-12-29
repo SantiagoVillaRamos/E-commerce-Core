@@ -42,7 +42,7 @@ class ListOrdersUseCase:
                         product_name=item.product_name,
                         quantity=item.quantity.value,
                         unit_price=item.unit_price,
-                        subtotal=item.subtotal
+                        subtotal=item.calculate_subtotal()
                     )
                     for item in o.items
                 ],

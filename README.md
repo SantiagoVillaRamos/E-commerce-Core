@@ -31,7 +31,33 @@ src/
 
 ## 🚀 Instalación
 
-### 1. Crear entorno virtual
+### Opción A: Usando Docker (Recomendado) 🐳
+
+La forma más rápida de ejecutar el proyecto es usando Docker:
+
+```bash
+# 1. Clonar el repositorio
+git clone <repository-url>
+cd Vertical-Slicing
+
+# 2. Levantar servicios (PostgreSQL + App)
+docker-compose up -d
+
+# 3. Ver logs
+docker-compose logs -f app
+
+# 4. La API estará disponible en http://localhost:8000
+```
+
+Los servicios incluyen:
+- **PostgreSQL 15**: Base de datos en puerto 5432
+- **FastAPI App**: Aplicación en puerto 8000
+- **Migraciones automáticas**: Alembic se ejecuta al iniciar
+
+### Opción B: Instalación Manual
+
+#### 1. Crear entorno virtual
+
 
 ```bash
 python -m venv venv
@@ -94,7 +120,54 @@ uvicorn src.main:app --reload
 
 La API estará disponible en: `http://localhost:8000`
 
+## 🐳 Comandos Docker
+
+### Gestión de Servicios
+
+```bash
+# Levantar servicios
+docker-compose up -d
+
+# Ver logs en tiempo real
+docker-compose logs -f
+
+# Ver logs solo de la app
+docker-compose logs -f app
+
+# Detener servicios
+docker-compose down
+
+# Detener y eliminar volúmenes (borra la BD)
+docker-compose down -v
+
+# Reconstruir imágenes
+docker-compose build
+
+# Reiniciar un servicio
+docker-compose restart app
+```
+
+### Comandos Útiles
+
+```bash
+# Ejecutar comando en el contenedor
+docker-compose exec app bash
+
+# Ver estado de servicios
+docker-compose ps
+
+# Ejecutar migraciones manualmente
+docker-compose exec app alembic upgrade head
+
+# Acceder a PostgreSQL
+docker-compose exec db psql -U ecommerce -d ecommerce
+
+# Ver tablas
+docker-compose exec db psql -U ecommerce -d ecommerce -c "\dt"
+```
+
 ## 📚 Documentación API
+
 
 - **Swagger UI**: http://localhost:8000/docs
 - **ReDoc**: http://localhost:8000/redoc
